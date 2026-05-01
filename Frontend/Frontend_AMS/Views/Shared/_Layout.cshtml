@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DON BOSCO TECHNICAL COLLEGE </title>
+    <script type="importmap"></script>
+    <link rel="shortcut icon" href="images/favicon.ico" />
+	<link rel="stylesheet" href="~/css/global.css" />
+    @RenderSection("Styles", required: false)
+
+</head>
+<body>
+<!--Sidebar-->
+   <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>DON BOSCO TECHNICAL COLLEGE</h3>
+        </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a href="/">Dashboard</a>
+            </li>
+            <li>
+                <a href="/Student">Students</a>
+            </li>
+            <li>
+                <a href="/Attendance">Attendance</a>
+            </li>
+            <li>
+				<a href="/Teacher">Teacher</a>
+			</li>
+            <li>
+				<a href="/Course">Course</a>
+			</li>
+		</ul>
+    </div>
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <div class="topbar">
+            <div class="page-title">@ViewData["Title"]</div>
+            <div class="topbar-right">
+                <span class="topbar-date" id="topbar-date"></span>
+                <div class="avatar">AD</div>
+            </div>
+        </div>
+
+        <div class="content">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer class="border-top footer text-muted">
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

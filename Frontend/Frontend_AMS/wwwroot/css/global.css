@@ -1,0 +1,596 @@
+﻿/* =============================================
+   EduAttend - site.css
+   Color Palette: EduAttend Brand Colors
+   Fonts: Nunito (headings) + Nunito Sans (body)
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Nunito+Sans:wght@400;600&display=swap');
+
+/* ---- CSS VARIABLES ---- */
+:root {
+    /* Blue / Primary */
+    --navy: #1e3a6e;
+    --navy2: #1e4494;
+    --blue: #2b5cb8;
+    --blue-light: #3a6fd8;
+    --blue-tint: #e8f0fd;
+    /* Status: Present */
+    --green: #2d8a5e;
+    --green-tint: #e8f5ee;
+    /* Status: Absent */
+    --red: #c0392b;
+    --red-tint: #fdf0ee;
+    /* Status: Late */
+    --orange: #c97c1a;
+    --orange-tint: #fef5e7;
+    /* Accent: Purple */
+    --purple: #6c4db8;
+    --purple-tint: #f0ecfc;
+    /* Neutral Grays */
+    --bg: #f8f9fc;
+    --bg2: #f1f3f8;
+    --border: #e4e8f0;
+    --border2: #cdd3e0;
+    --text: #2d3650;
+    --text2: #5a6680;
+    --text3: #9aa5be;
+    --white: #ffffff;
+}
+
+/* =============================================
+   BASE
+   ============================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =============================================
+   SIDEBAR
+   ============================================= */
+
+.sidebar {
+    width: 210px;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.logo {
+    padding: 22px 18px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+}
+
+.logo-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 3px;
+}
+
+nav {
+    padding: 12px 8px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav-item.active {
+        background: var(--blue-light);
+        color: #ffffff;
+    }
+
+.nav-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* =============================================
+   MAIN WRAPPER
+   ============================================= */
+
+.main-wrapper {
+    margin-left: 210px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* =============================================
+   TOPBAR
+   ============================================= */
+
+.topbar {
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.page-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar-date {
+    font-size: 12px;
+    color: var(--text3);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--blue-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* =============================================
+   CONTENT AREA
+   ============================================= */
+
+.content {
+    padding: 28px;
+    flex: 1;
+}
+
+/* =============================================
+   ALERTS
+   ============================================= */
+
+.alert {
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.alert-success {
+    background: var(--green-tint);
+    color: var(--green);
+    border: 1px solid #b5dfc9;
+}
+
+.alert-danger {
+    background: var(--red-tint);
+    color: var(--red);
+    border: 1px solid #f5c5bd;
+}
+
+.alert-warning {
+    background: var(--orange-tint);
+    color: var(--orange);
+    border: 1px solid #f5d9a0;
+}
+
+.alert-info {
+    background: var(--blue-tint);
+    color: var(--blue);
+    border: 1px solid #b8cff5;
+}
+
+/* =============================================
+   STAT CARDS (Dashboard)
+   ============================================= */
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+    /* Stat value color variants */
+    .stat-value.blue {
+        color: var(--blue);
+    }
+
+    .stat-value.green {
+        color: var(--green);
+    }
+
+    .stat-value.amber {
+        color: var(--orange);
+    }
+
+    .stat-value.coral {
+        color: var(--red);
+    }
+
+/* Mini progress bar inside stat card */
+.stat-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin-top: 10px;
+    background: var(--bg2);
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+}
+
+/* =============================================
+   CARD
+   ============================================= */
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.card-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+/* =============================================
+   SEARCH / FILTER ROW
+   ============================================= */
+
+.search-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+    .search-row input,
+    .search-row select {
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: var(--white);
+        font-family: 'Nunito Sans', sans-serif;
+        font-size: 13px;
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.15s;
+    }
+
+    .search-row input {
+        flex: 1;
+    }
+
+        .search-row input:focus,
+        .search-row select:focus {
+            border-color: var(--blue);
+        }
+
+/* =============================================
+   TABLE
+   ============================================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+thead tr {
+    background: var(--bg2);
+}
+
+th {
+    text-align: left;
+    padding: 9px 12px;
+    color: var(--text3);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+    th:first-child {
+        border-radius: 7px 0 0 7px;
+    }
+
+    th:last-child {
+        border-radius: 0 7px 7px 0;
+    }
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover td {
+    background: var(--bg);
+}
+
+/* =============================================
+   BADGES
+   ============================================= */
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* Status badges */
+.badge-green {
+    background: var(--green-tint);
+    color: var(--green);
+}
+
+.badge-red {
+    background: var(--red-tint);
+    color: var(--red);
+}
+
+.badge-amber {
+    background: var(--orange-tint);
+    color: var(--orange);
+}
+
+.badge-blue {
+    background: var(--blue-tint);
+    color: var(--blue);
+}
+
+.badge-purple {
+    background: var(--purple-tint);
+    color: var(--purple);
+}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 7px;
+    border: 1px solid var(--border2);
+    background: var(--white);
+    cursor: pointer;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+    .btn:hover {
+        background: var(--bg2);
+    }
+
+/* Primary */
+.btn-primary {
+    background: var(--blue);
+    color: #ffffff;
+    border-color: var(--blue);
+}
+
+    .btn-primary:hover {
+        background: var(--navy2);
+        border-color: var(--navy2);
+    }
+
+/* Small */
+.btn-sm {
+    padding: 5px 12px;
+    font-size: 12px;
+}
+
+/* Danger */
+.btn-danger {
+    color: var(--red);
+    border-color: #f7c5c0;
+}
+
+    .btn-danger:hover {
+        background: var(--red-tint);
+    }
+
+/* Success / Submit */
+.btn-success {
+    background: var(--green);
+    color: #ffffff;
+    border-color: var(--green);
+}
+
+    .btn-success:hover {
+        background: #247a52;
+        border-color: #247a52;
+    }
+
+.actions {
+    display: flex;
+    gap: 6px;
+}
+
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.form-control {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--white);
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+    .form-control:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(43, 92, 184, 0.1);
+    }
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.text-danger {
+    color: var(--red);
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+
+
+.att-legend {
+    display: flex;
+    gap: 18px;
+    font-size: 12px;
+    color: var(--text3);
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+.att-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 36px;
+    color: var(--text3);
+    font-size: 13px;
+}
+
+
+.page-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
