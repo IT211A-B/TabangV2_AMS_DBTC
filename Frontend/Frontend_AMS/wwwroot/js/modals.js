@@ -1,4 +1,7 @@
-﻿function openEditModal(id, name, course, year, email, status) {
+﻿
+
+
+function openEditModal(id, name, course, year, email, status) {
     document.getElementById("editId").value = id;
     document.getElementById("editName").value = name;
     document.getElementById("editCourse").value = course;

@@ -1,5 +1,6 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Nunito+Sans:wght@400;600&display=swap');
 
+/*Color Palette*/
 :root {
     --navy: #1e3a6e;
     --blue: #2b5cb8;
@@ -11,6 +12,8 @@
     --red-tint: #fdf0ee;
     --orange: #c97c1a;
     --orange-tint: #fef5e7;
+    --purple: #6c4db8;
+    --purple-tint: #f0ecfc;
     --bg: #f8f9fc;
     --bg2: #f1f3f8;
     --border: #e4e8f0;
@@ -21,7 +24,7 @@
     --white: #ffffff;
 }
 
-/* Base */
+/*Base*/
 * {
     box-sizing: border-box;
     margin: 0;
@@ -35,7 +38,127 @@ body {
     background: var(--bg);
 }
 
-/* Card header row (title + button) */
+/*Layout*/
+
+/* Sidebar */
+.sidebar {
+    width: 210px;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 100;
+}
+
+.logo {
+    padding: 22px 18px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+}
+
+.logo-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 3px;
+}
+
+/* Nav items */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 12px;
+    margin: 2px 8px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav-item.active {
+        background: var(--blue);
+        color: #ffffff;
+    }
+
+/* Main wrapper */
+.main-wrapper {
+    margin-left: 210px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Topbar */
+.topbar {
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.page-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar-date {
+    font-size: 12px;
+    color: var(--text3);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--blue-tint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* Content area */
+.content {
+    padding: 24px 28px;
+    flex: 1;
+}
+
+/* Card Hearder row basta add and title*/
 .card {
     display: flex;
     align-items: center;
@@ -54,7 +177,7 @@ body {
     color: var(--text);
 }
 
-/* Search row */
+/*Search Row*/
 .search-row {
     display: flex;
     gap: 10px;
@@ -83,7 +206,7 @@ body {
             border-color: var(--blue);
         }
 
-/* Attendance legend */
+/*Legends*/
 .att-legend {
     display: flex;
     gap: 18px;
@@ -102,7 +225,7 @@ body {
     vertical-align: middle;
 }
 
-/* Table */
+/*Table*/
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -125,6 +248,7 @@ body {
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.04em;
+        border-bottom: 1px solid var(--border);
     }
 
     .table td {
@@ -141,7 +265,7 @@ body {
         background: var(--bg);
     }
 
-/*  Badges*/
+/*Badges*/
 .badge {
     display: inline-block;
     padding: 3px 10px;
@@ -170,7 +294,12 @@ body {
     color: var(--blue);
 }
 
-/* Buttons */
+.badge-purple {
+    background: var(--purple-tint);
+    color: var(--purple);
+}
+
+/*Buttons*/
 .btn {
     padding: 8px 16px;
     border-radius: 7px;
@@ -236,24 +365,7 @@ body {
     font-size: 11px;
 }
 
-.me-1 {
-    margin-right: 4px !important;
-}
-
-.mb-2 {
-    margin-bottom: 8px !important;
-}
-
-.mt-1 {
-    margin-top: 4px !important;
-}
-
-.py-3 {
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-
-/* Modal overrides (Bootstrap 5 compatible) */
+/*Modals*/
 .modal-content {
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -279,9 +391,12 @@ body {
 .modal-footer {
     border-top: 1px solid var(--border);
     padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
-/* Form controls inside modals */
+/* Modal format */
 .form-control {
     width: 100%;
     padding: 8px 12px;
@@ -300,7 +415,129 @@ body {
         box-shadow: 0 0 0 3px rgba(43, 92, 184, 0.1);
     }
 
-/*Utility */
+/*ALERTS */
+.alert {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.alert-success {
+    background: var(--green-tint);
+    color: var(--green);
+    border: 1px solid #b5dfc9;
+}
+
+.alert-danger {
+    background: var(--red-tint);
+    color: var(--red);
+    border: 1px solid #f5c5bd;
+}
+
+.alert-warning {
+    background: var(--orange-tint);
+    color: var(--orange);
+    border: 1px solid #f5d9a0;
+}
+
+.alert-info {
+    background: var(--blue-tint);
+    color: var(--blue);
+    border: 1px solid #b8cff5;
+}
+/*Dashboard Stat Cards*/
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-family: 'Nunito', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+    .stat-value.blue {
+        color: var(--blue);
+    }
+
+    .stat-value.green {
+        color: var(--green);
+    }
+
+    .stat-value.amber {
+        color: var(--orange);
+    }
+
+    .stat-value.coral {
+        color: var(--red);
+    }
+
+.stat-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin-top: 10px;
+    background: var(--bg2);
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+}
+
+/*Dashboard Grid*/
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.dash-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+
+.dash-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.dash-card-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+/*Healpers*/
 .text-danger {
     color: var(--red) !important;
 }
@@ -315,4 +552,25 @@ body {
 
 .small {
     font-size: 12px;
+}
+
+.me-1 {
+    margin-right: 4px !important;
+}
+
+.mb-2 {
+    margin-bottom: 8px !important;
+}
+
+.mt-1 {
+    margin-top: 4px !important;
+}
+
+.py-3 {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.fw-bold {
+    font-weight: 700;
 }

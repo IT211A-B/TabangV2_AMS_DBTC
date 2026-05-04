@@ -1,5 +1,11 @@
 ﻿@{
-
+ @using Frontend_AMS.Models;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/js/modals.js" asp-append-version="true"></script>
 }
 <!--Header-->
 <div class="card">
@@ -26,16 +32,7 @@
 	</thead>
 </table>
 <tbody>
-	<tr>
-		<td>1</td>
-		<td>John Doe</td>
-		<td>Mathematics</td>
-		<td>Active</td>
-		<td>
-			<button class="btn btn-sm btn-warning">Edit</button>
-			<button class="btn btn-sm btn-danger">Delete</button>
-		</td>
-	</tr>
+
 </tbody>
 
 <!--Create Modal-->
@@ -50,7 +47,12 @@
 
             <div class="modal-body">
                 <input id="createName" class="form-control mb-2" placeholder="Full Name" />
-                <input id="createCourse" class="form-control mb-2" placeholder="Course" />
+                <select id="createCourse" class="form-control mb-2" placeholder="Course">
+                    <option value="">Select Course</option>
+                    <option value="BSIT">BSIT</option>
+                    <option value="BSME">BSME</option>
+                    <option value="BTVTED">BTVTED</option>
+                </select>
                 <input id="createEmail" class="form-control mb-2" placeholder="Email" />
                 <select id="createStatus" class="form-control mb-2">
                     <option value="">Select Status</option>
@@ -81,7 +83,12 @@
             <div class="modal-body">
                 <input type="hidden" id="editId" />
                 <input id="editName" class="form-control mb-2" placeholder="Full Name" />
-                <input id="editSubject" class="form-control mb-2" placeholder="Subject / Department" />
+                <select id="createCourse" class="form-control mb-2" placeholder="Course">
+                    <option value="">Select Course</option>
+                    <option value="BSIT">BSIT</option>
+                    <option value="BSME">BSME</option>
+                    <option value="BTVTED">BTVTED</option>
+                </select>
                 <input id="editEmail" class="form-control mb-2" placeholder="Email" />
                 <input id="editPhone" class="form-control mb-2" placeholder="Phone Number" />
                 <select id="editStatus" class="form-control mb-2">

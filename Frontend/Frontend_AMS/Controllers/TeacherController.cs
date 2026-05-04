@@ -6,6 +6,8 @@ namespace Frontend_AMS.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Title"] = "Teachers";
+            ViewData["ActivePage"] = "Teachers";
             return View();
         }
         public IActionResult Create()
