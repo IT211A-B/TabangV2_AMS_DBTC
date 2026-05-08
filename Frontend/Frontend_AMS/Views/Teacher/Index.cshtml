@@ -1,14 +1,16 @@
 ﻿@{
  @using Frontend_AMS.Models;
+    @model IEnumerable<TeacherModel>
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
 }
 @section Scripts {
-    <script src="~/js/modals.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/jquery/teacher.js" asp-append-version="true"></script>
 }
 <!--Header-->
-<div class="card">
+<div class="page-header">
 	<span class=" card-title">Teacher List</span>
 	<button class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#createModal">Add Teacher
 	</button>
@@ -20,7 +22,7 @@
 </div>
 
 <!--Teacher table-->
-<table id="teacher-table" class="teacher">
+<table id="teacher-table" class="table">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -30,10 +32,19 @@
 			<th>Actions</th>
 		</tr>
 	</thead>
+    <tbody id="teacherTableBody">
+        <tr>
+            <th>0001</th>
+            <th>John Doe</th>
+            <th>BSIT</th>
+            <th>Active</th>
+            <td>
+                <button class="btn btn-sm btn-secondary edit-btn" data-id="1">Edit</button>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="1">Delete</button>
+            </td>
+        </tr>
+    </tbody>
 </table>
-<tbody>
-
-</tbody>
 
 <!--Create Modal-->
 <div class="modal fade" id="createModal" tabindex="-1">

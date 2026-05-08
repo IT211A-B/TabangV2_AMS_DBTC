@@ -159,7 +159,7 @@ body {
 }
 
 /* Card Hearder row basta add and title*/
-.card {
+.page-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -201,8 +201,7 @@ body {
         flex: 1;
     }
 
-        .search-row input:focus,
-        .search-row select:focus {
+    .search-row input:focus,.search-row select:focus {
             border-color: var(--blue);
         }
 

@@ -1,18 +1,20 @@
 ﻿@{
     @using Frontend_AMS.Models;
+    @model IEnumerable<CourseModel>
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
 }
 @section Scripts {
-    <script src="~/js/modals.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/jquery/course.js" asp-append-version="true"></script>
 }
 
 <!--Header row-->
-<div class="card">
+<div class="page-header">
     <span class="card-title">Course List</span>
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-        + Add Course
+       Add Course
     </button>
 </div>
 
@@ -34,7 +36,18 @@
         </tr>
     </thead>
     <tbody id="courseTableBody">
-        <!--populated by courses.ajax.js-->
+        <tr>
+            <td>1</td>
+            <td>BSIT</td>
+            <td>Bachelor of Science in Information Technology</td>
+            <td>John Doe</td>
+            <td>4</td>
+            <td>
+                <button class="btn btn-sm btn-secondary edit-btn" data-id="1">Edit</button>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="1">Delete</button>
+            </td>
+        </tr>
+		<!--populated by jQuery -->
     </tbody>
 </table>
 

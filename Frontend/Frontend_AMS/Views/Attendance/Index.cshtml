@@ -1,15 +1,16 @@
 ﻿@{
 	@using Frontend_AMS.Models;
+	@model IEnumerable<AttendanceModel>
 }
 @section Styles {
 	<link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
 }
 @section Scripts {
-	<script src="~/js/modals.js" asp-append-version="true"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="~/jquery/attendance.js" asp-append-version="true"></script>
 }
-
 <!--Header-->
-<div class="card">
+<div class="page-header">
 	<span class="card-title">Attendance List</span>
 	<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Add Attendance</button>
 </div>
@@ -46,6 +47,18 @@
 		</tr>
 	</thead>
 	<tbody id="attendanceTableBody">
+		<tr>
+				<td>1</td>
+				<td>2024-09-01</td>
+				<td>Alice Johnson</td>
+				<td>BSIT</td>
+				<td><span class="att-dot" style="background:#2d8a5e;"></span> Present</td>
+				<td>On time</td>
+				<td>
+					<button class="btn btn-sm btn-secondary edit-btn" data-id="1">Edit</button>
+					<button class="btn btn-sm btn-danger delete-btn" data-id="1">Delete</button>
+				</td>
+		</tr>
 		<!-- populated by jQuery PS: i jsut press the tab button -->
 	</tbody>
 </table>
@@ -78,6 +91,7 @@
 		</div>
 	</div>
 </div>
+
 <!--Edit Modal-->
 <div class="modal fade" id="editModal">
 	<div class="modal-dialog">
