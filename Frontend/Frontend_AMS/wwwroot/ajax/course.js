@@ -1,35 +1,19 @@
-﻿window.Student = (function () {
+﻿window.Course = (function () {
 
-    var yearMap = {
-        '1': '1st Year',
-        '2': '2nd Year',
-        '3': '3rd Year',
-        '4': '4th Year'
-    };
-
-    function statusBadge(status) {
-        var cls = status === 'Present' ? 'badge-green' :
-            status === 'Late' ? 'badge-amber' :
-                'badge-red';
-        return '<span class="badge ' + cls + '">' + status + '</span>';
-    }
-
-    function courseBadge(course) {
-        return '<span class="badge badge-blue">' + course + '</span>';
-    }
-
+    // RENDER TABLE
     function renderTable(data) {
 
-        var $tbody = $('#studentTableBody');
+        var $tbody = $('#courseTableBody');
 
         $tbody.empty();
 
+        // NO DATA
         if (!data || data.length === 0) {
 
             $tbody.html(
                 '<tr>' +
-                '<td colspan="7" class="text-center text-muted py-3">' +
-                'No students found.' +
+                '<td colspan="6" class="text-center text-muted py-3">' +
+                'No courses found.' +
                 '</td>' +
                 '</tr>'
             );
@@ -37,50 +21,55 @@
             return;
         }
 
-        $.each(data, function (i, s) {
+        // LOOP DATA
+        $.each(data, function (i, c) {
 
             $tbody.append(
                 '<tr>' +
-                '<td>' + s.id + '</td>' +
+
+                '<td>' + c.id + '</td>' +
 
                 '<td>' +
-                '<strong>' + s.name + '</strong>' +
+                '<span class="badge bg-primary">' +
+                c.courseCode +
+                '</span>' +
                 '</td>' +
 
                 '<td>' +
-                courseBadge(s.course) +
+                '<strong>' + c.courseName + '</strong>' +
                 '</td>' +
 
                 '<td>' +
-                (yearMap[s.yearLevel] || s.yearLevel) +
+                (c.assignedTeacher || '—') +
                 '</td>' +
 
                 '<td>' +
-                s.email +
+                c.units +
                 '</td>' +
 
                 '<td>' +
-                statusBadge(s.status) +
-                '</td>' +
 
-                '<td>' +
-                '<button class="btn btn-sm btn-warning me-1 btn-edit" data-id="' + s.id + '">' +
+                '<button class="btn btn-sm btn-warning me-1 btn-edit" data-id="' + c.id + '">' +
                 'Edit' +
                 '</button>' +
 
-                '<button class="btn btn-sm btn-danger btn-delete" data-id="' + s.id + '" data-name="' + s.name + '">' +
+                '<button class="btn btn-sm btn-danger btn-delete" data-id="' + c.id + '" data-name="' + c.courseCode + ' — ' + c.courseName + '">' +
                 'Delete' +
                 '</button>' +
+
                 '</td>' +
+
                 '</tr>'
             );
 
         });
     }
+
+    // LOAD ALL COURSES
     function load() {
 
         $.ajax({
-            url: '/Student/GetAll',
+            url: '/Courses/GetAll',
             type: 'GET',
 
             success: function (data) {
@@ -89,10 +78,10 @@
 
             error: function () {
 
-                $('#studentTableBody').html(
+                $('#courseTableBody').html(
                     '<tr>' +
-                    '<td colspan="7" class="text-center text-muted">' +
-                    'Failed to load students.' +
+                    '<td colspan="6" class="text-center text-muted">' +
+                    'Failed to load courses.' +
                     '</td>' +
                     '</tr>'
                 );
@@ -101,10 +90,11 @@
         });
     }
 
+    // GET COURSE BY ID
     function getById(id, callback) {
 
         $.ajax({
-            url: '/Student/GetById/' + id,
+            url: '/Courses/GetById/' + id,
             type: 'GET',
 
             success: function (data) {
@@ -112,15 +102,16 @@
             },
 
             error: function () {
-                alert('Could not load student data.');
+                alert('Could not load course data.');
             }
         });
     }
 
+    // CREATE COURSE
     function create(payload, onSuccess, onError) {
 
         $.ajax({
-            url: '/Student/Create',
+            url: '/Courses/Create',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(payload),
@@ -135,15 +126,16 @@
             },
 
             error: function () {
-                onError('Failed to add student.');
+                onError('Failed to create course.');
             }
         });
     }
 
+    // EDIT COURSE
     function edit(payload, onSuccess, onError) {
 
         $.ajax({
-            url: '/Student/Edit',
+            url: '/Courses/Edit',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(payload),
@@ -158,7 +150,7 @@
             },
 
             error: function () {
-                onError('Failed to update student.');
+                onError('Failed to update course.');
             }
         });
     }
@@ -166,7 +158,7 @@
     function remove(id, onSuccess) {
 
         $.ajax({
-            url: '/Student/Delete/' + id,
+            url: '/Courses/Delete/' + id,
             type: 'POST',
 
             success: function (res) {
@@ -179,12 +171,18 @@
             },
 
             error: function () {
-                alert('Failed to delete student.');
+                alert('Failed to delete course.');
             }
         });
     }
 
+    // INITIAL LOAD
+    $(document).ready(function () {
+
+        load();
+
     });
+
     return {
         load: load,
         getById: getById,
