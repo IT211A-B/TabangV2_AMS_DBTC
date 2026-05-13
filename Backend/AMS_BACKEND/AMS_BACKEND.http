@@ -1,0 +1,6 @@
+@AMS_BACKEND_HostAddress = http://localhost:5294
+
+GET {{AMS_BACKEND_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
