@@ -2,7 +2,7 @@
 
 namespace AMS_BACKEND.DTO
 {
-    // ── STUDENT ──────────────────────────────────────────────
+    //STUDENT
 
     public class CreateStudentDTO
     {
@@ -48,7 +48,7 @@ namespace AMS_BACKEND.DTO
         public string Status { get; set; } = "";
     }
 
-    // ── TEACHER ──────────────────────────────────────────────
+    //TEACHER
 
     public class CreateTeacherDTO
     {
@@ -82,7 +82,7 @@ namespace AMS_BACKEND.DTO
         public string Status { get; set; } = "";
     }
 
-    // ── COURSE ───────────────────────────────────────────────
+    //COURSE
 
     public class CreateCourseDTO
     {
@@ -111,7 +111,7 @@ namespace AMS_BACKEND.DTO
         public string TeacherId { get; set; } = "";
     }
 
-    // ── ATTENDANCE ───────────────────────────────────────────
+    //ATTENDANCE
 
     public class CreateAttendanceDTO
     {
