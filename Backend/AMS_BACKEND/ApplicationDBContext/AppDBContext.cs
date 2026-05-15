@@ -1,7 +1,5 @@
 ﻿using AMS_BACKEND.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace AMS_BACKEND.ApplicationDBContext
 {
@@ -16,8 +14,17 @@ namespace AMS_BACKEND.ApplicationDBContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Student>()
+                .HasKey(s => s.StudentId);
+
+            modelBuilder.Entity<Teacher>()
+                .HasKey(t => t.TeacherId);
+
+            modelBuilder.Entity<Course>()
+                .HasKey(c => c.CourseCode);
+
             modelBuilder.Entity<Attendance>()
-                .HasKey(a => new { a.StudentId, a.CourseId, a.Date });
+                .HasKey(a => new { a.StudentId, a.CourseCode, a.Date });
         }
     }
 }

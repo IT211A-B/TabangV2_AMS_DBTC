@@ -11,7 +11,7 @@ namespace AMS_BACKEND.Repositories
         public async Task<List<ResponseAttendanceDTO>> GetAll() =>
             await context.Attendances
                 .Select(a => new ResponseAttendanceDTO(
-                    a.StudentId, a.CourseId, a.TeacherId,
+                    a.StudentId,   a.CourseCode, a.TeacherId,
                     a.Status, a.Remarks, a.Date))
                 .ToListAsync();
 
@@ -20,7 +20,7 @@ namespace AMS_BACKEND.Repositories
             var a = new Attendance
             {
                 StudentId = dto.StudentId,
-                CourseId = dto.CourseId,
+                CourseCode = dto.CourseCode,
                 TeacherId = dto.TeacherId,
                 Status = dto.Status,
                 Remarks = dto.Remarks,
@@ -30,7 +30,7 @@ namespace AMS_BACKEND.Repositories
             context.Attendances.Add(a);
             await context.SaveChangesAsync();
             return new ResponseAttendanceDTO(
-                a.StudentId, a.CourseId, a.TeacherId,
+                a.StudentId, a.CourseCode, a.TeacherId,
                 a.Status, a.Remarks, a.Date);
         }
 
@@ -38,7 +38,7 @@ namespace AMS_BACKEND.Repositories
         {
             var a = await context.Attendances
                 .FirstOrDefaultAsync(a => a.StudentId == dto.StudentId
-                                       && a.CourseId == dto.CourseId
+                                       && a.CourseCode == dto.CourseCode
                                        && a.Date == dto.Date);
             if (a == null) return null;
             a.TeacherId = dto.TeacherId;
@@ -47,7 +47,7 @@ namespace AMS_BACKEND.Repositories
             a.UpdatedAt = DateTime.UtcNow;
             await context.SaveChangesAsync();
             return new ResponseAttendanceDTO(
-                a.StudentId, a.CourseId, a.TeacherId,
+                a.StudentId, a.CourseCode, a.TeacherId,
                 a.Status, a.Remarks, a.Date);
         }
 
@@ -55,7 +55,7 @@ namespace AMS_BACKEND.Repositories
         {
             var a = await context.Attendances
                 .FirstOrDefaultAsync(a => a.StudentId == studentId
-                                       && a.CourseId == courseId
+                                       && a.CourseCode == courseId
                                        && a.Date == date);
             if (a == null) return false;
             context.Attendances.Remove(a);

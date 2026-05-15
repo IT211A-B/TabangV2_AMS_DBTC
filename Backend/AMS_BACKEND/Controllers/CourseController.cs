@@ -30,7 +30,7 @@ namespace AMS_BACKEND.Controllers
         public async Task<IActionResult> Create([FromBody] CreateCourseDTO dto)
         {
             var created = await service.Create(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.CourseId }, created);
+            return CreatedAtAction(nameof(GetById), new { code = created.CourseCode }, created);
         }
 
         /// <summary>Updates an existing course by Code.</summary>

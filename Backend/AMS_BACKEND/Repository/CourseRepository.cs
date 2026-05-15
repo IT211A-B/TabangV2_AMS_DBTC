@@ -27,6 +27,7 @@ namespace AMS_BACKEND.Repositories
         {
             var c = new Course
             {
+                CourseCode = Guid.NewGuid().ToString(), // Set required CourseCode
                 CourseName = dto.CourseName,
                 Department = dto.Department,
                 Units = dto.Units,

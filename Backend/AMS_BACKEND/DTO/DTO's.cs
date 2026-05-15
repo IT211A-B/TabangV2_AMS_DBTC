@@ -125,16 +125,16 @@ namespace AMS_BACKEND.DTO
 
     public class ResponseCourseDTO
     {
-        public ResponseCourseDTO(int courseId, string courseName, string department, string units, string teacherId)
+        public ResponseCourseDTO(string courseCode, string courseName, string department, string units, string teacherId)
         {
-            CourseId = courseId;
+            CourseCode = courseCode;
             CourseName = courseName;
             Department = department;
             Units = units;
             TeacherId = teacherId;
         }
 
-        public int CourseId { get; set; }
+        public string CourseCode { get; set; } = "";
         public string CourseName { get; set; } = "";
         public string Department { get; set; } = "";
         public string Units { get; set; } = "";
@@ -148,8 +148,8 @@ namespace AMS_BACKEND.DTO
         [Required][RegularExpression(@"^\d{11}$", ErrorMessage = "Student ID must be exactly 11 digits.")]
         public string StudentId { get; set; } = "";
 
-        [Required][RegularExpression(@"^\d{4}$", ErrorMessage = "Course ID must be exactly 4 digits.")]
-        public string CourseId { get; set; } = "";
+        [Required][RegularExpression(@"^\d{4}$", ErrorMessage = "Course Code must be exactly 4 digits.")]
+        public string CourseCode { get; set; } = "";
 
         [Required][RegularExpression(@"^\d{7}$", ErrorMessage = "Teacher ID must be exactly 7 digits.")]
         public string TeacherId { get; set; } = "";
@@ -181,6 +181,7 @@ namespace AMS_BACKEND.DTO
 
         [Required]
         public DateTime Date { get; set; }
+        public string CourseCode { get; internal set; }
     }
 
     public class ResponseAttendanceDTO
