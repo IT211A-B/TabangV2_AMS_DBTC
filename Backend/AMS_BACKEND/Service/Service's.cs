@@ -36,5 +36,10 @@ namespace AMS_BACKEND.Services
         public Task<ResponseAttendanceDTO> Create(CreateAttendanceDTO dto) => repo.Create(dto);
         public Task<ResponseAttendanceDTO?> Update(UpdateAttendanceDTO dto) => repo.Update(dto);
         public Task<bool> Delete(string sId, string cId, DateTime date) => repo.Delete(sId, cId, date);
+
+        internal async Task<bool> Delete(string studentId, int courseCode, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

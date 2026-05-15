@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AMS_BACKEND.Controllers
 {
+    /// <summary>Handles student records.</summary>
     [ApiController, Route("api/students"), Produces("application/json")]
     public class StudentController(StudentService service) : ControllerBase
     {
+        /// <summary>Returns all students.</summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<ResponseStudentDTO>), 200)]
         public async Task<IActionResult> GetAll() => Ok(await service.GetAll());
 
+        /// <summary>Returns a student by ID.</summary>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ResponseStudentDTO), 200)]
         [ProducesResponseType(404)]
@@ -20,6 +23,7 @@ namespace AMS_BACKEND.Controllers
             return student == null ? NotFound("Student not found.") : Ok(student);
         }
 
+        /// <summary>Creates a new student. Status defaults to Active.</summary>
         [HttpPost]
         [ProducesResponseType(typeof(ResponseStudentDTO), 201)]
         [ProducesResponseType(400)]
@@ -29,6 +33,7 @@ namespace AMS_BACKEND.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.StudentId }, created);
         }
 
+        /// <summary>Updates an existing student by ID.</summary>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ResponseStudentDTO), 200)]
         [ProducesResponseType(400)]
@@ -39,6 +44,7 @@ namespace AMS_BACKEND.Controllers
             return updated == null ? NotFound("Student not found.") : Ok(updated);
         }
 
+        /// <summary>Deletes a student by ID.</summary>
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

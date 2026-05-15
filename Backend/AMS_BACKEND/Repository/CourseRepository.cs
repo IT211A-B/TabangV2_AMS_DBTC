@@ -47,7 +47,7 @@ namespace AMS_BACKEND.Repositories
             c.Units = dto.Units; c.TeacherId = dto.TeacherId;
             await context.SaveChangesAsync();
             return new ResponseCourseDTO(
-                c.CourseId, c.CourseName,
+                c.CourseCode, c.CourseName,
                 c.Department, c.Units, c.TeacherId);
         }
 

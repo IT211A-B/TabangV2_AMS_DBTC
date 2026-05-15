@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AMS_BACKEND.Controllers
 {
+    /// <summary>Handles teacher records.</summary>
     [ApiController, Route("api/teachers"), Produces("application/json")]
     public class TeacherController(TeacherService service) : ControllerBase
     {
+        /// <summary>Returns all teachers.</summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<ResponseTeacherDTO>), 200)]
         public async Task<IActionResult> GetAll() => Ok(await service.GetAll());
 
+        /// <summary>Returns a teacher by ID.</summary>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ResponseTeacherDTO), 200)]
         [ProducesResponseType(404)]
@@ -20,6 +23,7 @@ namespace AMS_BACKEND.Controllers
             return teacher == null ? NotFound("Teacher not found.") : Ok(teacher);
         }
 
+        /// <summary>Creates a new teacher. Status defaults to Active.</summary>
         [HttpPost]
         [ProducesResponseType(typeof(ResponseTeacherDTO), 201)]
         [ProducesResponseType(400)]
@@ -29,6 +33,7 @@ namespace AMS_BACKEND.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.TeacherId }, created);
         }
 
+        /// <summary>Updates an existing teacher by ID.</summary>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ResponseTeacherDTO), 200)]
         [ProducesResponseType(400)]
@@ -39,6 +44,7 @@ namespace AMS_BACKEND.Controllers
             return updated == null ? NotFound("Teacher not found.") : Ok(updated);
         }
 
+        /// <summary>Deletes a teacher by ID.</summary>
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

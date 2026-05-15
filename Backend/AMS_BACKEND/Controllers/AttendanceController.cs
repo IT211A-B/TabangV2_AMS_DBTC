@@ -4,34 +4,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AMS_BACKEND.Controllers
 {
-    /// <summary>Log and manage student attendance records.</summary>
-    [ApiController]
-    [Route("api/attendance")]
-    [Produces("application/json")]
+    /// <summary>Handles attendance records.</summary>
+    [ApiController, Route("api/attendance"), Produces("application/json")]
     public class AttendanceController(AttendanceService service) : ControllerBase
     {
-        /// <summary>Get all attendance records.</summary>
-        /// <response code="200">List of attendance records.</response>
+        /// <summary>Returns all attendance records.</summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<ResponseAttendanceDTO>), 200)]
         public async Task<IActionResult> GetAll() => Ok(await service.GetAll());
 
-        /// <summary>Log a new attendance entry.</summary>
-        /// <response code="200">Attendance recorded.</response>
-        /// <response code="400">Validation error.</response>
+        /// <summary>Logs a new attendance entry.</summary>
         [HttpPost]
-        [ProducesResponseType(typeof(ResponseAttendanceDTO), 200)]
+        [ProducesResponseType(typeof(ResponseAttendanceDTO), 201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Create([FromBody] CreateAttendanceDTO dto)
         {
             var created = await service.Create(dto);
-            return Ok(created);
+            return StatusCode(201, created);
         }
 
-        /// <summary>Update an attendance entry (matched by StudentId + CourseId + Date).</summary>
-        /// <response code="200">Attendance updated.</response>
-        /// <response code="400">Validation error.</response>
-        /// <response code="404">Record not found.</response>
+        /// <summary>Updates an attendance entry matched by StudentId, CourseId, and Date.</summary>
         [HttpPut]
         [ProducesResponseType(typeof(ResponseAttendanceDTO), 200)]
         [ProducesResponseType(400)]
@@ -42,21 +34,16 @@ namespace AMS_BACKEND.Controllers
             return updated == null ? NotFound("Attendance record not found.") : Ok(updated);
         }
 
-        /// <summary>Delete an attendance entry.</summary>
-        /// <param name="studentId">Student ID</param>
-        /// <param name="courseId">Course ID</param>
-        /// <param name="date">Date (e.g. 2025-01-15)</param>
-        /// <response code="204">Deleted successfully.</response>
-        /// <response code="404">Record not found.</response>
+        /// <summary>Deletes an attendance entry by StudentId, CourseCode, and Date.</summary>
         [HttpDelete]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete(
             [FromQuery] string studentId,
-            [FromQuery] string courseId,
+            [FromQuery] int courseCode,
             [FromQuery] DateTime date)
         {
-            var deleted = await service.Delete(studentId, courseId, date);
+            var deleted = await service.Delete(studentId, courseCode, date);
             return deleted ? NoContent() : NotFound("Attendance record not found.");
         }
     }
