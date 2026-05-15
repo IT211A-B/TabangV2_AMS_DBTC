@@ -1,107 +1,93 @@
-﻿window.Teacher = (function () {
+﻿window.TeacherApi = (function () {
 
-    //mas chuy ni siya ay 
-    function statusBadge(status) {
-        var cls = status == 'Active' ? 'badge-green' :
-            status == 'On Live' ? 'badge-amber' :
-                status == 'Absent' ? 'badge-red';
-        return '<span class="badge ' + cls + '">' + status + '</span>'; 
-    }
+    const BASE_URL = 'http://localhost:5294/api/Teacher';
 
-    function renderTable(data) {
-        var $tbody = $('#teacherTableBody').empty();
+    // GET ALL
+    function getAll(success, error) {
 
-        if (!data || data.length === 0) {
-            $tbody.html(
-                '<tr><td colspan="7" class="text-center text-muted py-3">No teachers found.</td></tr>'
-            );
-            return;
-        }
-
-        $.each(data, function (i, t) {
-            $tbody.append(
-                '<tr>' +
-                '<td>' + t.id + '</td>' +
-                '<td><strong>' + t.name + '</strong></td>' +
-                '<td>' + t.subject + '</td>' +
-                '<td>' + t.email + '</td>' +
-                '<td>' + (t.phone || '—') + '</td>' +
-                '<td>' + statusBadge(t.status) + '</td>' +
-                '<td>' +
-                '<button class="btn btn-sm btn-warning me-1 btn-edit" data-id="' + t.id + '">Edit</button>' +
-                '<button class="btn btn-sm btn-danger btn-delete" data-id="' + t.id + '" data-name="' + t.name + '">Delete</button>' +
-                '</td>' +
-                '</tr>'
-            );
-        });
-    }
-    function load() {
         $.ajax({
-            url: 'http://localhost:5294/api/Teacher',
+
+            url: BASE_URL,
+
             type: 'GET',
-            success: function (data) {
-                renderTable(data);
-            },
-            error: function () {
-                $('#teacherTableBody').html(
-                    '<tr><td colspan="7" class="text-center text-muted">Failed to load teachers.</td></tr>'
-                );
-            }
+
+            success: success,
+
+            error: error
         });
     }
-    function create(payload, onSuccess, onError) {
+
+    // GET BY ID
+    function getById(id, success, error) {
+
         $.ajax({
-            url: 'http://localhost:5294/api/Teacher',
+
+            url: BASE_URL + '/' + id,
+
+            type: 'GET',
+
+            success: success,
+
+            error: error
+        });
+    }
+
+    // CREATE
+    function create(payload, success, error) {
+
+        $.ajax({
+
+            url: BASE_URL,
+
             type: 'POST',
+
             contentType: 'application/json',
+
             data: JSON.stringify(payload),
-            success: function (res) {
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-            },
-            error: function () {
-                onError('Failed to add teacher. Please try again.');
-            }
+
+            success: success,
+
+            error: error
         });
     }
 
-    function edit(payload, onSuccess, onError) {
+    // EDIT
+    function edit(id, payload, success, error) {
+
         $.ajax({
-            url: 'http://localhost:5294/api/Teacher',
+
+            url: BASE_URL + '/' + id,
+
             type: 'PUT',
+
             contentType: 'application/json',
+
             data: JSON.stringify(payload),
-            success: function (res) {
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-            },
-            error: function () {
-                onError('Failed to update teacher. Please try again.');
-            }
+
+            success: success,
+
+            error: error
         });
     }
 
-    function remove(id, onSuccess) {
+    // DELETE
+    function remove(id, success, error) {
+
         $.ajax({
-            url: 'http://localhost:5294/api/Teacher/' + id,
+
+            url: BASE_URL + '/' + id,
+
             type: 'DELETE',
-            success: function (res) {
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-            },
-            error: function () {
-                alert('Failed to delete teacher.');
-            }
+
+            success: success,
+
+            error: error
         });
     }
+
     return {
-        load: load,
+
+        getAll: getAll,
         getById: getById,
         create: create,
         edit: edit,

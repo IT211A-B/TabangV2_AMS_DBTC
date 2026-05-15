@@ -5,7 +5,7 @@
         public string CourseCode { get; set; } = "IT21"; // e.g., IT201,CS101 AND MANY MORE
         public string Department { get; set; } = "Computer Science"; // "Computer Science"
         public string CourseName { get; set; } = "Introduction to IT";// e.g., "Introduction to IT"
-        public string TeacherID { get; set; } = "John Doe"; // e.g., "John Doe"
+        public string TeacherID { get; set; } = "1"; // e.g., "1,2,3,4"
         public int Units { get; set; } = 3; // e.g., 3
     }
 }

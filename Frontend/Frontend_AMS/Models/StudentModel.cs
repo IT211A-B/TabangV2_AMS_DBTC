@@ -6,7 +6,7 @@
         public string FullName { get; set; } = string.Empty;// Initialize with an empty string to avoid null reference issues
         public string Email { get; set; }
         public string Status { get; set; } = "Present"; //Present,Absent,Late,Excused
-        public string Course { get; set; } = "BSIT"; //BSIT,BSME,BTVETED
+        public string Course { get; set; } = "IT21"; //BSIT,BSME,BTVETED
         public int YearLevel { get; set; }
     }
 }

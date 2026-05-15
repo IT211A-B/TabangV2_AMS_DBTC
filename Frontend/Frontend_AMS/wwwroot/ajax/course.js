@@ -1,195 +1,97 @@
-﻿window.Course = (function () {
+﻿window.CourseApi = (function () {
 
-    // RENDER TABLE
-    function renderTable(data) {
+    const BASE_URL = 'http://localhost:5294/api/Course';
 
-        var $tbody = $('#courseTableBody');
-
-        $tbody.empty();
-
-        // NO DATA
-        if (!data || data.length === 0) {
-
-            $tbody.html(
-                '<tr>' +
-                '<td colspan="6" class="text-center text-muted py-3">' +
-                'No courses found.' +
-                '</td>' +
-                '</tr>'
-            );
-
-            return;
-        }
-
-        // LOOP DATA
-        $.each(data, function (i, c) {
-
-            $tbody.append(
-                '<tr>' +
-
-                '<td>' + c.id + '</td>' +
-
-                '<td>' +
-                '<span class="badge bg-primary">' +
-                c.courseCode +
-                '</span>' +
-                '</td>' +
-
-                '<td>' +
-                '<strong>' + c.courseName + '</strong>' +
-                '</td>' +
-
-                '<td>' +
-                (c.assignedTeacher || '—') +
-                '</td>' +
-
-                '<td>' +
-                c.units +
-                '</td>' +
-
-                '<td>' +
-
-                '<button class="btn btn-sm btn-warning me-1 btn-edit" data-id="' + c.id + '">' +
-                'Edit' +
-                '</button>' +
-
-                '<button class="btn btn-sm btn-danger btn-delete" data-id="' + c.id + '" data-name="' + c.courseCode + ' — ' + c.courseName + '">' +
-                'Delete' +
-                '</button>' +
-
-                '</td>' +
-
-                '</tr>'
-            );
-
-        });
-    }
-
-    // LOAD ALL COURSES
-    function load() {
+    // GET ALL
+    function getAll(success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Course',
+
+            url: BASE_URL,
+
             type: 'GET',
 
-            success: function (data) {
-                renderTable(data);
-            },
+            success: success,
 
-            error: function () {
-
-                $('#courseTableBody').html(
-                    '<tr>' +
-                    '<td colspan="6" class="text-center text-muted">' +
-                    'Failed to load courses.' +
-                    '</td>' +
-                    '</tr>'
-                );
-
-            }
+            error: error
         });
     }
 
-    // GET COURSE BY ID
-    function getById(id, callback) {
+    // GET BY ID
+    function getById(id, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Course/' + id,
+
+            url: BASE_URL + '/' + id,
+
             type: 'GET',
 
-            success: function (data) {
-                callback(data);
-            },
+            success: success,
 
-            error: function () {
-                alert('Could not load course data.');
-            }
+            error: error
         });
     }
 
-    // CREATE COURSE
-    function create(payload, onSuccess, onError) {
+    // CREATE
+    function create(payload, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Course',
+
+            url: BASE_URL,
+
             type: 'POST',
+
             contentType: 'application/json',
+
             data: JSON.stringify(payload),
 
-            success: function (res) {
+            success: success,
 
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-
-            },
-
-            error: function () {
-                onError('Failed to create course.');
-            }
+            error: error
         });
     }
 
-    // EDIT COURSE
-    function edit(payload, onSuccess, onError) {
+    // EDIT
+    function edit(id, payload, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Course',
+
+            url: BASE_URL + '/' + id,
+
             type: 'PUT',
+
             contentType: 'application/json',
+
             data: JSON.stringify(payload),
 
-            success: function (res) {
+            success: success,
 
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-
-            },
-
-            error: function () {
-                onError('Failed to update course.');
-            }
+            error: error
         });
     }
 
-    function remove(id, onSuccess) {
+    // DELETE
+    function remove(id, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Course' + id,
+
+            url: BASE_URL + '/' + id,
+
             type: 'DELETE',
 
-            success: function (res) {
+            success: success,
 
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-
-            },
-
-            error: function () {
-                alert('Failed to delete course.');
-            }
+            error: error
         });
     }
 
-    // INITIAL LOAD
-    $(document).ready(function () {
-
-        load();
-
-    });
-
     return {
-        load: load,
+
+        getAll: getAll,
         getById: getById,
         create: create,
         edit: edit,
-        remove: remove,
-        renderTable: renderTable
+        remove: remove
     };
 
 })();

@@ -1,80 +1,243 @@
 ﻿$(document).ready(function () {
 
-    $('#createModal').on('show.bs.modal', function () {
-        var today = new Date().toISOString().split('T')[0];
-        $('#createDate').val(today);
-        $('#createStudent').val('');
-        $('#createCourse').val('');
-        $('#createStatus').val('');
-        $('#createRemarks').val('');
-        $('#createError').text('').hide();
-    });
+    loadAttendance();
 
-    $('#saveCreateBtn').on('click', function () {
-        var date = $('#createDate').val();
-        var student = $('#createStudent').val().trim();
-        var course = $('#createCourse').val();
-        var status = $('#createStatus').val();
-        var remarks = $('#createRemarks').val().trim();
+    // LOAD TABLE
+    function loadAttendance() {
 
-        if (!date || !student || !course || !status) {
-            $('#createError').text('Please fill in all required fields.').show();
+        AttendanceApi.getAll(
+
+            function (data) {
+
+                renderTable(data);
+            },
+
+            function () {
+
+                $('#attendanceTableBody').html(
+
+                    '<tr>' +
+                    '<td colspan="7" class="text-center text-danger">' +
+                    'Failed to load attendance records.' +
+                    '</td>' +
+                    '</tr>'
+                );
+            }
+        );
+    }
+
+    // RENDER TABLE
+    function renderTable(data) {
+
+        let rows = '';
+
+        if (!data || data.length === 0) {
+
+            rows =
+                '<tr>' +
+                '<td colspan="7" class="text-center text-muted">' +
+                'No attendance records found.' +
+                '</td>' +
+                '</tr>';
+
+            $('#attendanceTableBody').html(rows);
+
             return;
         }
-        $('#createError').hide();
 
-        Attendance.create(
-            { date: date, studentName: student, course: course, status: status, remarks: remarks },
-            function () { $('#createModal').modal('hide'); },
-            function (msg) { $('#createError').text(msg).show(); }
-        );
-    });
+        data.forEach(a => {
 
-    $('.btn-edit').on('click', function () {
-        var id = $(this).data('id');
-        Attendance.getById(id, function (a) {
-            $('#editId').val(a.id);
-            $('#editDate').val(a.date ? a.date.split('T')[0] : '');
-            $('#editStudent').val(a.studentName);
-            $('#editCourse').val(a.course);
-            $('#editStatus').val(a.status);
-            $('#editRemarks').val(a.remarks);
-            $('#editError').text('').hide();
-            $('#editModal').modal('show');
+            rows +=
+                '<tr>' +
+
+                '<td>' + a.studentsId + '</td>' +
+
+                '<td>' + formatDate(a.date) + '</td>' +
+
+                '<td>' +
+                '<strong>' + a.fullName + '</strong>' +
+                '</td>' +
+
+                '<td>' + (a.course || '-') + '</td>' +
+
+                '<td>' + statusBadge(a.status) + '</td>' +
+
+                '<td>' + (a.remarks || '-') + '</td>' +
+
+                '<td>' +
+
+                '<button class="btn btn-warning btn-sm btn-edit" ' +
+                'data-id="' + a.studentsId + '">' +
+                'Edit' +
+                '</button> ' +
+
+                '<button class="btn btn-danger btn-sm btn-delete" ' +
+                'data-id="' + a.studentsId + '" ' +
+                'data-name="' + a.fullName + '">' +
+                'Delete' +
+                '</button>' +
+
+                '</td>' +
+
+                '</tr>';
         });
-    });
 
-    $('#saveEditBtn').on('click', function () {
-        var id = $('#editId').val();
-        var date = $('#editDate').val();
-        var student = $('#editStudent').val().trim();
-        var course = $('#editCourse').val();
-        var status = $('#editStatus').val();
-        var remarks = $('#editRemarks').val().trim();
+        $('#attendanceTableBody').html(rows);
+    }
 
-        if (!date || !student || !course || !status) {
-            $('#editError').text('Please fill in all required fields.').show();
-            return;
-        }
-        $('#editError').hide();
+    // STATUS BADGE
+    function statusBadge(status) {
 
-        Attendance.edit(
-            { id: Number(id), date: date, studentName: student, course: course, status: status, remarks: remarks },
-            function () { $('#editModal').modal('hide'); },
-            function (msg) { $('#editError').text(msg).show(); }
+        let cls = status === 'Present'
+            ? 'badge-green'
+            : status === 'Absent'
+                ? 'badge-red'
+                : 'badge-amber';
+
+        return '<span class="badge ' + cls + '">' + status + '</span>';
+    }
+
+    // FORMAT DATE
+    function formatDate(dateStr) {
+
+        return dateStr
+            ? dateStr.split('T')[0]
+            : '';
+    }
+
+    // CREATE
+    $('#saveCreateBtn').on('click', function () {
+
+        const payload = {
+
+            fullName: $('#createStudent').val(),
+
+            course: $('#createCourse').val(),
+
+            date: $('#createDate').val(),
+
+            status: $('#createStatus').val(),
+
+            remarks: $('#createRemarks').val()
+        };
+
+        AttendanceApi.create(
+
+            payload,
+
+            function () {
+
+                $('#createModal').modal('hide');
+
+                loadAttendance();
+            },
+
+            function () {
+
+                alert('Failed to create attendance.');
+            }
         );
     });
 
-    $('.btn-delete').on('click', function () {
+    // EDIT BUTTON
+    $(document).on('click', '.btn-edit', function () {
+
+        const id = $(this).data('id');
+
+        AttendanceApi.getById(
+
+            id,
+
+            function (a) {
+
+                $('#editId').val(a.studentsId);
+
+                $('#editStudent').val(a.fullName);
+
+                $('#editCourse').val(a.course);
+
+                $('#editDate').val(formatDate(a.date));
+
+                $('#editStatus').val(a.status);
+
+                $('#editRemarks').val(a.remarks);
+
+                $('#editModal').modal('show');
+            }
+        );
+    });
+
+    // SAVE EDIT
+    $('#saveEditBtn').on('click', function () {
+
+        const id = $('#editId').val();
+
+        const payload = {
+
+            studentsId: Number(id),
+
+            fullName: $('#editStudent').val(),
+
+            course: $('#editCourse').val(),
+
+            date: $('#editDate').val(),
+
+            status: $('#editStatus').val(),
+
+            remarks: $('#editRemarks').val()
+        };
+
+        AttendanceApi.edit(
+
+            id,
+
+            payload,
+
+            function () {
+
+                $('#editModal').modal('hide');
+
+                loadAttendance();
+            },
+
+            function () {
+
+                alert('Failed to update attendance.');
+            }
+        );
+    });
+
+    // DELETE BUTTON
+    $(document).on('click', '.btn-delete', function () {
+
         $('#deleteId').val($(this).data('id'));
+
         $('#deleteStudentName').text($(this).data('name'));
+
         $('#deleteModal').modal('show');
     });
 
+    // CONFIRM DELETE
     $('#confirmDeleteBtn').on('click', function () {
-        Attendance.remove($('#deleteId').val(), function () {
-            $('#deleteModal').modal('hide');
-        });
+
+        const id = $('#deleteId').val();
+
+        AttendanceApi.remove(
+
+            id,
+
+            function () {
+
+                $('#deleteModal').modal('hide');
+
+                loadAttendance();
+            },
+
+            function () {
+
+                alert('Failed to delete attendance.');
+            }
+        );
     });
 
 });

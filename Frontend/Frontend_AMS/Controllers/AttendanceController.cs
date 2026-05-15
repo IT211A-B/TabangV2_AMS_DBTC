@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using Frontend_AMS.Models;
+using Frontend_AMS.Services;
+using Microsoft.AspNetCore.Mvc;
 namespace Frontend_AMS.Controllers
 {
     public class AttendanceController : Controller
@@ -29,17 +30,25 @@ namespace Frontend_AMS.Controllers
 
         //CREATE ATTENDANCE RECORD
         [HttpPost]
-        public IActionResult Create()
+        public IActionResult Create([FromBody] AttendanceModel attendance)
         {
+            var created = true;// Implement logic to create a new attendance record ako ra ni ge tab maam 
+            return View();
+        }
 
-            return View();
-        }
-        public IActionResult Edit()
+        //EDIT ATTENDANCE RECORD
+        [HttpPut]
+        public IActionResult Edit([FromBody] AttendanceModel attendance)
         {
+            var edited = true;// Implement logic to create a new attendance record ako ra ni ge tab maam 
             return View();
         }
+
+        //DELETE ATTENDANCE RECORD
+        [HttpDelete]
         public IActionResult Delete()
         {
+            var deleted = true;// Implement logic to create a new attendance record ako ra ni ge tab maam
             return View();
         }
     }

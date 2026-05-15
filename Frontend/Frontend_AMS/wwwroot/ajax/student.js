@@ -1,197 +1,97 @@
-﻿window.Student = (function () {
+﻿window.StudentApi = (function () {
 
-    var yearMap = {
-        '1': '1st Year',
-        '2': '2nd Year',
-        '3': '3rd Year',
-        '4': '4th Year'
-    };
+    const BASE_URL = 'http://localhost:5294/api/Student';
 
-    function statusBadge(status) {
-        var cls = status === 'Present' ? 'badge-green' :
-            status === 'Late' ? 'badge-amber' :
-                'badge-red';
-        return '<span class="badge ' + cls + '">' + status + '</span>';
-    }
-
-    function courseBadge(course) {
-        return '<span class="badge badge-blue">' + course + '</span>';
-    }
-
-    function renderTable(data) {
-
-        var $tbody = $('#studentTableBody');
-
-        $tbody.empty();
-
-        if (!data || data.length === 0) {
-
-            $tbody.html(
-                '<tr>' +
-                '<td colspan="7" class="text-center text-muted py-3">' +
-                'No students found.' +
-                '</td>' +
-                '</tr>'
-            );
-
-            return;
-        }
-
-        $.each(data, function (i, s) {
-
-            $tbody.append(
-                '<tr>' +
-                '<td>' + s.id + '</td>' +
-
-                '<td>' +
-                '<strong>' + s.name + '</strong>' +
-                '</td>' +
-
-                '<td>' +
-                courseBadge(s.course) +
-                '</td>' +
-
-                '<td>' +
-                (yearMap[s.yearLevel] || s.yearLevel) +
-                '</td>' +
-
-                '<td>' +
-                s.email +
-                '</td>' +
-
-                '<td>' +
-                statusBadge(s.status) +
-                '</td>' +
-
-                '<td>' +
-                '<button class="btn btn-sm btn-warning me-1 btn-edit" data-id="' + s.id + '">' +
-                'Edit' +
-                '</button>' +
-
-                '<button class="btn btn-sm btn-danger btn-delete" data-id="' + s.id + '" data-name="' + s.name + '">' +
-                'Delete' +
-                '</button>' +
-                '</td>' +
-                '</tr>'
-            );
-
-        });
-    }
-    function load() {
+    // GET ALL
+    function getAll(success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Student',
+
+            url: BASE_URL,
+
             type: 'GET',
 
-            success: function (data) {
-                renderTable(data);
-            },
+            success: success,
 
-            error: function () {
-
-                $('#studentTableBody').html(
-                    '<tr>' +
-                    '<td colspan="7" class="text-center text-muted">' +
-                    'Failed to load students.' +
-                    '</td>' +
-                    '</tr>'
-                );
-
-            }
+            error: error
         });
     }
 
-    function getById(id, callback) {
+    // GET BY ID
+    function getById(id, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Student/' + id,
+
+            url: BASE_URL + '/' + id,
+
             type: 'GET',
 
-            success: function (data) {
-                callback(data);
-            },
+            success: success,
 
-            error: function () {
-                alert('Could not load student data.');
-            }
+            error: error
         });
     }
 
-    function create(payload, onSuccess, onError) {
+    // CREATE
+    function create(payload, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Student',
+
+            url: BASE_URL,
+
             type: 'POST',
+
             contentType: 'application/json',
+
             data: JSON.stringify(payload),
 
-            success: function (res) {
+            success: success,
 
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-
-            },
-
-            error: function () {
-                onError('Failed to add student.');
-            }
+            error: error
         });
     }
 
-    function edit(payload, onSuccess, onError) {
+    // EDIT
+    function edit(id, payload, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Student',
+
+            url: BASE_URL + '/' + id,
+
             type: 'PUT',
+
             contentType: 'application/json',
+
             data: JSON.stringify(payload),
 
-            success: function (res) {
+            success: success,
 
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-
-            },
-
-            error: function () {
-                onError('Failed to update student.');
-            }
+            error: error
         });
     }
 
-    function remove(id, onSuccess) {
+    // DELETE
+    function remove(id, success, error) {
 
         $.ajax({
-            url: 'http://localhost:5294/api/Student/' + id,
+
+            url: BASE_URL + '/' + id,
+
             type: 'DELETE',
 
-            success: function (res) {
+            success: success,
 
-                if (res.success) {
-                    onSuccess();
-                    load();
-                }
-
-            },
-
-            error: function () {
-                alert('Failed to delete student.');
-            }
+            error: error
         });
     }
 
-    });
     return {
-        load: load,
+
+        getAll: getAll,
         getById: getById,
         create: create,
         edit: edit,
-        remove: remove,
-        renderTable: renderTable
+        remove: remove
     };
 
 })();
