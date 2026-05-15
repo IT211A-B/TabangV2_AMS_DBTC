@@ -6,83 +6,57 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AMS_BACKEND.Repositories
 {
-    public class CourseRepository : ICourseRepository
+    public class CourseRepository(AppDBContext context) : ICourseRepository
     {
-        private readonly AppDBContext _context;
-
-        public CourseRepository(AppDBContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<List<ResponseCourseDTO>> GetAll()
-        {
-            return await _context.Courses
-                .Select(c => new ResponseCourseDTO
-                {
-                    CourseId = c.CourseId,
-                    CourseName = c.CourseName,
-                    Department = c.Department
-                }).ToListAsync();
-        }
+        public async Task<List<ResponseCourseDTO>> GetAll() =>
+            await context.Courses
+                .Select(c => new ResponseCourseDTO(
+                    c.CourseId, c.CourseName,
+                    c.Department, c.Units, c.TeacherId))
+                .ToListAsync();
 
         public async Task<ResponseCourseDTO?> GetById(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null) return null;
-
-            return new ResponseCourseDTO
-            {
-                CourseId = course.CourseId,
-                CourseName = course.CourseName,
-                Department = course.Department
-            };
+            var c = await context.Courses.FindAsync(id);
+            return c == null ? null : new ResponseCourseDTO(
+                c.CourseId, c.CourseName,
+                c.Department, c.Units, c.TeacherId);
         }
 
         public async Task<ResponseCourseDTO> Create(CreateCourseDTO dto)
         {
-            var course = new Course
+            var c = new Course
             {
                 CourseName = dto.CourseName,
-                Department = dto.Department
+                Department = dto.Department,
+                Units = dto.Units,
+                TeacherId = dto.TeacherId
             };
-
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
-
-            return new ResponseCourseDTO
-            {
-                CourseId = course.CourseId,
-                CourseName = course.CourseName,
-                Department = course.Department
-            };
+            context.Courses.Add(c);
+            await context.SaveChangesAsync();
+            return new ResponseCourseDTO(
+                c.CourseId, c.CourseName,
+                c.Department, c.Units, c.TeacherId);
         }
 
         public async Task<ResponseCourseDTO?> Update(int id, UpdateCourseDTO dto)
         {
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null) return null;
-
-            course.CourseName = dto.CourseName;
-            course.Department = dto.Department;
-
-            await _context.SaveChangesAsync();
-
-            return new ResponseCourseDTO
-            {
-                CourseId = course.CourseId,
-                CourseName = course.CourseName,
-                Department = course.Department
-            };
+            var c = await context.Courses.FindAsync(id);
+            if (c == null) return null;
+            c.CourseName = dto.CourseName; c.Department = dto.Department;
+            c.Units = dto.Units; c.TeacherId = dto.TeacherId;
+            await context.SaveChangesAsync();
+            return new ResponseCourseDTO(
+                c.CourseId, c.CourseName,
+                c.Department, c.Units, c.TeacherId);
         }
 
         public async Task<bool> Delete(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null) return false;
-
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
+            var c = await context.Courses.FindAsync(id);
+            if (c == null) return false;
+            context.Courses.Remove(c);
+            await context.SaveChangesAsync();
             return true;
         }
     }

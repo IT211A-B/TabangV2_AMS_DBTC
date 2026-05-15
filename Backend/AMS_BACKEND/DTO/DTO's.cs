@@ -3,13 +3,11 @@
 namespace AMS_BACKEND.DTO
 {
     //STUDENT
-
     public class CreateStudentDTO
     {
         [Required][StringLength(100)] public string FullName { get; set; } = "";
         [Required][EmailAddress] public string Email { get; set; } = "";
-        [Required]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Age must be a number.")]
+        [Required][RegularExpression(@"^\d{2}$", ErrorMessage = "Age must be exactly 2 digits (e.g. 18).")]
         public string Age { get; set; } = "";
         [RegularExpression("^(Male|Female|Other)$", ErrorMessage = "Sex: Male, Female, or Other.")]
         public string Sex { get; set; } = "";
@@ -24,8 +22,7 @@ namespace AMS_BACKEND.DTO
     {
         [Required][StringLength(100)] public string FullName { get; set; } = "";
         [Required][EmailAddress] public string Email { get; set; } = "";
-        [Required]
-        [RegularExpression(@"^\d+$", ErrorMessage = "Age must be a number.")]
+        [Required][RegularExpression(@"^\d{2}$", ErrorMessage = "Age must be exactly 2 digits (e.g. 18).")]
         public string Age { get; set; } = "";
         [RegularExpression("^(Male|Female|Other)$", ErrorMessage = "Sex: Male, Female, or Other.")]
         public string Sex { get; set; } = "";
@@ -38,6 +35,18 @@ namespace AMS_BACKEND.DTO
 
     public class ResponseStudentDTO
     {
+        public ResponseStudentDTO(int studentId, string fullName, string email, string age, string sex, string course, string yearLevel, string status)
+        {
+            StudentId = studentId;
+            FullName = fullName;
+            Email = email;
+            Age = age;
+            Sex = sex;
+            Course = course;
+            YearLevel = yearLevel;
+            Status = status;
+        }
+
         public int StudentId { get; set; }
         public string FullName { get; set; } = "";
         public string Email { get; set; } = "";
@@ -74,6 +83,16 @@ namespace AMS_BACKEND.DTO
 
     public class ResponseTeacherDTO
     {
+        public ResponseTeacherDTO(int teacherId, string fullName, string email, string sex, string coursehandled, string status)
+        {
+            TeacherId = teacherId;
+            FullName = fullName;
+            Email = email;
+            Sex = sex;
+            Coursehandled = coursehandled;
+            Status = status;
+        }
+
         public int TeacherId { get; set; }
         public string FullName { get; set; } = "";
         public string Email { get; set; } = "";
@@ -88,8 +107,9 @@ namespace AMS_BACKEND.DTO
     {
         [Required][StringLength(100)] public string CourseName { get; set; } = "";
         [Required][StringLength(100)] public string Department { get; set; } = "";
-        [RegularExpression(@"^\d+$", ErrorMessage = "Units must be a number.")]
+        [RegularExpression(@"^([1-9]|1\d|2[0-5])$", ErrorMessage = "Units must be a number between 1 and 25.")]
         public string Units { get; set; } = "";
+        [RegularExpression(@"^\d{7}$", ErrorMessage = "Teacher ID must be exactly 7 digits.")]
         public string TeacherId { get; set; } = "";
     }
 
@@ -97,13 +117,23 @@ namespace AMS_BACKEND.DTO
     {
         [Required][StringLength(100)] public string CourseName { get; set; } = "";
         [Required][StringLength(100)] public string Department { get; set; } = "";
-        [RegularExpression(@"^\d+$", ErrorMessage = "Units must be a number.")]
+        [RegularExpression(@"^([1-9]|1\d|2[0-5])$", ErrorMessage = "Units must be a number between 1 and 25.")]
         public string Units { get; set; } = "";
+        [RegularExpression(@"^\d{7}$", ErrorMessage = "Teacher ID must be exactly 7 digits.")]
         public string TeacherId { get; set; } = "";
     }
 
     public class ResponseCourseDTO
     {
+        public ResponseCourseDTO(int courseId, string courseName, string department, string units, string teacherId)
+        {
+            CourseId = courseId;
+            CourseName = courseName;
+            Department = department;
+            Units = units;
+            TeacherId = teacherId;
+        }
+
         public int CourseId { get; set; }
         public string CourseName { get; set; } = "";
         public string Department { get; set; } = "";
@@ -115,32 +145,56 @@ namespace AMS_BACKEND.DTO
 
     public class CreateAttendanceDTO
     {
-        [Required] public string StudentId { get; set; } = "";
-        [Required] public string CourseId { get; set; } = "";
-        [Required] public string TeacherId { get; set; } = "";
-        [Required]
-        [RegularExpression("^(Present|Absent|Late|Excused)$",
-            ErrorMessage = "Status: Present, Absent, Late, or Excused.")]
+        [Required][RegularExpression(@"^\d{11}$", ErrorMessage = "Student ID must be exactly 11 digits.")]
+        public string StudentId { get; set; } = "";
+
+        [Required][RegularExpression(@"^\d{4}$", ErrorMessage = "Course ID must be exactly 4 digits.")]
+        public string CourseId { get; set; } = "";
+
+        [Required][RegularExpression(@"^\d{7}$", ErrorMessage = "Teacher ID must be exactly 7 digits.")]
+        public string TeacherId { get; set; } = "";
+        [Required][RegularExpression("^(Present|Absent|Late|Excused)$", ErrorMessage = "Status: Present, Absent, Late, or Excused.")]
         public string Status { get; set; } = "";
-        [StringLength(500)] public string Remarks { get; set; } = "";
-        [Required] public DateTime Date { get; set; }
+
+        [StringLength(500)]
+        public string Remarks { get; set; } = "";
+
+        [Required]
+        public DateTime Date { get; set; }
     }
 
     public class UpdateAttendanceDTO
     {
-        [Required] public string StudentId { get; set; } = "";
-        [Required] public string CourseId { get; set; } = "";
-        [Required] public string TeacherId { get; set; } = "";
-        [Required]
-        [RegularExpression("^(Present|Absent|Late|Excused)$",
-            ErrorMessage = "Status: Present, Absent, Late, or Excused.")]
+        [Required][RegularExpression(@"^\d{11}$", ErrorMessage = "Student ID must be exactly 11 digits.")]
+        public string StudentId { get; set; } = "";
+
+        [Required][RegularExpression(@"^\d{4}$", ErrorMessage = "Course ID must be exactly 4 digits.")]
+        public string CourseId { get; set; } = "";
+
+        [Required][RegularExpression(@"^\d{7}$", ErrorMessage = "Teacher ID must be exactly 7 digits.")]
+        public string TeacherId { get; set; } = "";
+        [Required][RegularExpression("^(Present|Absent|Late|Excused)$", ErrorMessage = "Status: Present, Absent, Late, or Excused.")]
         public string Status { get; set; } = "";
-        [StringLength(500)] public string Remarks { get; set; } = "";
-        [Required] public DateTime Date { get; set; }
+
+        [StringLength(500)]
+        public string Remarks { get; set; } = "";
+
+        [Required]
+        public DateTime Date { get; set; }
     }
 
     public class ResponseAttendanceDTO
     {
+        public ResponseAttendanceDTO(string studentId, string courseId, string teacherId, string status, string remarks, DateTime date)
+        {
+            StudentId = studentId;
+            CourseId = courseId;
+            TeacherId = teacherId;
+            Status = status;
+            Remarks = remarks;
+            Date = date;
+        }
+
         public string StudentId { get; set; } = "";
         public string CourseId { get; set; } = "";
         public string TeacherId { get; set; } = "";

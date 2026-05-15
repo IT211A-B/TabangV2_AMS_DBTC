@@ -2,10 +2,10 @@
 {
     public class Course
     {
-        public int CourseId { get; set; }
-        public string CourseName { get; set; } = "";
-        public string Department { get; set; } = "";
-        public string Units { get; set; } = "";
-        public string TeacherId { get; set; } = "";
+        public int CourseId { get; set; } // 210
+        public string CourseName { get; set; } = ""; // Information Technology
+        public string Department { get; set; } = ""; // College of Computer Studies
+        public string Units { get; set; } = ""; // 3
+        public string TeacherId { get; set; } = ""; // 101 (foreign key to Teacher)
     }
 }
