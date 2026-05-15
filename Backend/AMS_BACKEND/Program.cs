@@ -31,19 +31,22 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("https://localhost:7021") //Can be changed to the actual frontend URL tomorrow
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseCors("AllowFrontend");
+    app.UseCors();
+    app.UseAuthorization();
+    app.MapControllers();
+    app.Run();
 });
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseCors();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
