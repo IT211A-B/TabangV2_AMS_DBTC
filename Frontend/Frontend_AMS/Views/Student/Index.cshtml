@@ -1,0 +1,145 @@
+﻿<!--fix course dapat dili siya drop down dapat c user ang mo input -->
+
+@{
+	@using Frontend_AMS.Models;
+    @model IEnumerable<StudentModel>    
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true" />
+}
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/jquery/student.js" asp-append-version="true"></script>
+}
+
+<div class="page-header">
+    <span class="card-title">Student List</span>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Add Student</button>
+</div>
+
+<div class="search-row">
+    <input type="text" id="searchInput" placeholder="Search by name..." />
+</div>
+
+<table id="student-table" class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Year Level</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="studentTableBody">
+        <tr>
+            <td>1001</td>
+            <td>Alice Johnson</td>
+            <td>Computer Science</td>
+            <td> 2nd year</td>
+            <td>alice.j@email.com</td>
+            <td>Present</td>
+            <td>
+                <button class="btn btn-sm btn-secondary edit-btn" data-id="1">Edit</button>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="1">Delete</button>
+            </td>
+        </tr>
+ 
+       <!--populated by jQuery -->
+    </tbody>
+</table>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Add Student</h5>
+            </div>
+            <div class="modal-body">
+                <input id="createName" class="form-control mb-2" placeholder="Name" />
+                <select id="createCourse" class="form-control mb-2" placeholder="Course">
+                    <option value="">Select Course</option>
+                    <option value="CS101">CS101</option>
+                    <option value="IT210">IT210</option>
+                    <option value="BTVTED">BTVTED</option>
+                </select>
+                <select id="createYear" class="form-control mb-2" placeholder="Year Level">
+                    <option value="">Select Year Level</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+                <input id="createEmail" class="form-control mb-2" placeholder="Email" />
+                <select id="createStatus" class="form-control mb-2" placeholder="Status">
+                    <option value="">Select Status</option>
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                    <option value="Late">Late</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="saveCreateBtn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Edit Student</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId" />
+                <input id="editName" class="form-control mb-2" placeholder="Full Name" />
+                <select id="editCourse" class="form-control mb-2" placeholder="Course">
+                    <option value=""> Select Course </option>
+                    <option value="BSIT">BSIT</option>
+                    <option value="BSME">BSME</option>
+                    <option value="BTVTED">BTVTED</option>
+                </select> 
+                <select id="editYear" class="form-control mb-2" placeholder="Year Level">
+                    <option value="">Select Yearlevel</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+                <input id="editEmail" class="form-control mb-2" placeholder="Email" />
+                <select id="editStatus" class="form-control mb-2" placeholder="Status">
+                    <option value="">Select Status</option>
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                    <option value="Late">Late</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" id="saveEditBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Delete Student</h5>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="deleteId" />
+                <p>Are you sure you want to delete this student?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>  
