@@ -5,8 +5,6 @@
                 : 'badge-amber'; // Late
         return '<span class="badge ' + cls + '">' + status + '</span>';
     }
-
-    // Strip time from ISO date string: "2024-11-15T00:00:00" → "2024-11-15"
     function formatDate(dateStr) {
         return dateStr ? dateStr.split('T')[0] : '';
     }
@@ -40,7 +38,7 @@
     }
     function load() {
         $.ajax({
-            url: '/Attendance/GetAll',
+            url: 'http://localhost:5294/api/Attendance',
             type: 'GET',
             success: function (data) {
                 renderTable(data);
@@ -55,7 +53,7 @@
 
     function create(payload, onSuccess, onError) {
         $.ajax({
-            url: '/Attendance/Create',
+            url: 'http://localhost:5294/api/Attendance',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(payload),
@@ -73,8 +71,8 @@
 
     function edit(payload, onSuccess, onError) {
         $.ajax({
-            url: '/Attendance/Edit',
-            type: 'POST',
+            url: 'http://localhost:5294/api/Attendance',
+            type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(payload),
             success: function (res) {
@@ -91,8 +89,8 @@
 
     function remove(id, onSuccess) {
         $.ajax({
-            url: '/Attendance/Delete/' + id,
-            type: 'POST',
+            url: 'http://localhost:5294/api/Attendance' + id,
+            type: 'DELETE',
             success: function (res) {
                 if (res.success) {
                     onSuccess();

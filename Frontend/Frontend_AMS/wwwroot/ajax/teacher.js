@@ -37,7 +37,7 @@
     }
     function load() {
         $.ajax({
-            url: '/Teacher/GetAll',
+            url: 'http://localhost:5294/api/Teacher',
             type: 'GET',
             success: function (data) {
                 renderTable(data);
@@ -51,7 +51,7 @@
     }
     function create(payload, onSuccess, onError) {
         $.ajax({
-            url: '/Teacher/Create',
+            url: 'http://localhost:5294/api/Teacher',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(payload),
@@ -69,8 +69,8 @@
 
     function edit(payload, onSuccess, onError) {
         $.ajax({
-            url: '/Teacher/Edit',
-            type: 'POST',
+            url: 'http://localhost:5294/api/Teacher',
+            type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(payload),
             success: function (res) {
@@ -87,8 +87,8 @@
 
     function remove(id, onSuccess) {
         $.ajax({
-            url: '/Teacher/Delete/' + id,
-            type: 'POST',
+            url: 'http://localhost:5294/api/Teacher/' + id,
+            type: 'DELETE',
             success: function (res) {
                 if (res.success) {
                     onSuccess();

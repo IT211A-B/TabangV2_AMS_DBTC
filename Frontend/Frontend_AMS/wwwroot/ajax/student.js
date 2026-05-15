@@ -80,7 +80,7 @@
     function load() {
 
         $.ajax({
-            url: '/Student/GetAll',
+            url: 'http://localhost:5294/api/Student',
             type: 'GET',
 
             success: function (data) {
@@ -104,7 +104,7 @@
     function getById(id, callback) {
 
         $.ajax({
-            url: '/Student/GetById/' + id,
+            url: 'http://localhost:5294/api/Student/' + id,
             type: 'GET',
 
             success: function (data) {
@@ -120,7 +120,7 @@
     function create(payload, onSuccess, onError) {
 
         $.ajax({
-            url: '/Student/Create',
+            url: 'http://localhost:5294/api/Student',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(payload),
@@ -143,8 +143,8 @@
     function edit(payload, onSuccess, onError) {
 
         $.ajax({
-            url: '/Student/Edit',
-            type: 'POST',
+            url: 'http://localhost:5294/api/Student',
+            type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(payload),
 
@@ -166,8 +166,8 @@
     function remove(id, onSuccess) {
 
         $.ajax({
-            url: '/Student/Delete/' + id,
-            type: 'POST',
+            url: 'http://localhost:5294/api/Student/' + id,
+            type: 'DELETE',
 
             success: function (res) {
 

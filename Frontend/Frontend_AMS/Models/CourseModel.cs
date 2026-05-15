@@ -2,11 +2,10 @@
 {
     public class CourseModel
     {
-        public int Id { get; set; }
-        public string CourseCode { get; set; }= "BSIT"; // e.g., "BSIT"
-        public string CourseName { get; set; } = "BS Information Technology";// e.g., "BS Information Technology"
-        public string AssignedTeacher { get; set; } = "John Doe"; // e.g., "John Doe"
-        public int units { get; set; } = 3; // e.g., 3
-
+        public string CourseCode { get; set; } = "IT21"; // e.g., IT201,CS101 AND MANY MORE
+        public string Department { get; set; } = "Computer Science"; // "Computer Science"
+        public string CourseName { get; set; } = "Introduction to IT";// e.g., "Introduction to IT"
+        public string TeacherID { get; set; } = "John Doe"; // e.g., "John Doe"
+        public int Units { get; set; } = 3; // e.g., 3
     }
 }

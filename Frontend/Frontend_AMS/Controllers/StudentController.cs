@@ -1,10 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Frontend_AMS.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Frontend_AMS.Models;
+using Frontend_AMS.Services;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Frontend_AMS.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly StudentService _studentService;
+        public StudentController(StudentService studentService)
+        {
+            _studentService = studentService;
+        }
+
         public IActionResult Index()
         {
             ViewData["Title"] = "Students";
@@ -12,17 +19,54 @@ namespace Frontend_AMS.Controllers
 
             return View();
         }
-        public IActionResult Create()
+
+        //GET ALL STUDENTS
+        [HttpGet]
+        public IActionResult GetAll()
         {
+            var students = _studentService.GetAll();
+            return Json(students);
+        }
+
+        //GET STUDENT BY ID
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            var student = _studentService.Get(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return Json(student);
+        }
+        //CREATE STUDENT
+        [HttpPost]
+        public IActionResult Create([FromBody]StudentModel student)
+        {
+            var created = _studentService.Create(student);
             return View();
         }
-        public IActionResult Edit()
+
+        [HttpPut]
+        //EDIT STUDENT
+        public IActionResult Edit([FromBody]StudentModel student)
         {
-            return View();
+            var updated = _studentService.Edit(student);
+            if (updated == null)
+                return NotFound(new { success = false });
+
+            return Ok(new { success = true, data = updated });
         }
-        public IActionResult Delete()
+
+        //DELETE STUDENT
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
-            return View();
+            var deleted = _studentService.Delete(id);
+            if (!deleted)
+                return NotFound(new { success = false });
+
+            return Ok(new { success = true });
         }
     }
 }

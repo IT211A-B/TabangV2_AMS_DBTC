@@ -1,7 +1,18 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Frontend_AMS.Services;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<StudentService>();
+builder.Services.AddSingleton<TeacherService>();
+builder.Services.AddSingleton<CourseService>();
+builder.Services.AddSingleton<AttendanceService>();
+
 
 var app = builder.Build();
 
