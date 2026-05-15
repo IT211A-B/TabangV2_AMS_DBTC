@@ -1,9 +1,4 @@
-﻿// ============================================================
-//  ATTENDANCE CONTROLLER  –  handles HTTP requests for /api/attendance
-//  No GetById – records are looked up by StudentId + CourseId + Date.
-// ============================================================
-
-using AMS_BACKEND.DTO;
+﻿using AMS_BACKEND.DTO;
 using AMS_BACKEND.Services;
 using Microsoft.AspNetCore.Mvc;
 
