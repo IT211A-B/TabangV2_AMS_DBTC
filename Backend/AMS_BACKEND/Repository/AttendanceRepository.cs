@@ -5,94 +5,61 @@ using AMS_BACKEND.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS_BACKEND.Repositories
-{
-    public class AttendanceRepository : IAttendanceRepository
+{  
+    public class AttendanceRepository(AppDBContext context) : IAttendanceRepository
     {
-        private readonly AppDBContext _context;
-
-        public AttendanceRepository(AppDBContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<List<ResponseAttendanceDTO>> GetAll()
-        {
-            return await _context.Attendances
-                .Select(a => new ResponseAttendanceDTO
-                {
-                    StudentId = a.StudentId,
-                    CourseId = a.CourseId,
-                    TeacherId = a.TeacherId,
-                    Status = a.Status,
-                    Remarks = a.Remarks,
-                    Date = a.Date
-                }).ToListAsync();
-        }
+        public async Task<List<ResponseAttendanceDTO>> GetAll() =>
+            await context.Attendances
+                .Select(a => new ResponseAttendanceDTO(
+                    a.StudentId,   a.CourseCode, a.TeacherId,
+                    a.Status, a.Remarks, a.Date))
+                .ToListAsync();
 
         public async Task<ResponseAttendanceDTO> Create(CreateAttendanceDTO dto)
         {
-            var attendance = new Attendance
+            var a = new Attendance
             {
                 StudentId = dto.StudentId,
-                CourseId = dto.CourseId,
+                CourseCode = dto.CourseCode,
                 TeacherId = dto.TeacherId,
                 Status = dto.Status,
                 Remarks = dto.Remarks,
                 Date = dto.Date,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow
             };
-
-            _context.Attendances.Add(attendance);
-            await _context.SaveChangesAsync();
-
-            return new ResponseAttendanceDTO
-            {
-                StudentId = attendance.StudentId,
-                CourseId = attendance.CourseId,
-                TeacherId = attendance.TeacherId,
-                Status = attendance.Status,
-                Remarks = attendance.Remarks,
-                Date = attendance.Date
-            };
+            context.Attendances.Add(a);
+            await context.SaveChangesAsync();
+            return new ResponseAttendanceDTO(
+                a.StudentId, a.CourseCode, a.TeacherId,
+                a.Status, a.Remarks, a.Date);
         }
 
         public async Task<ResponseAttendanceDTO?> Update(UpdateAttendanceDTO dto)
         {
-            var attendance = await _context.Attendances
+            var a = await context.Attendances
                 .FirstOrDefaultAsync(a => a.StudentId == dto.StudentId
-                                       && a.CourseId == dto.CourseId
+                                       && a.CourseCode == dto.CourseCode
                                        && a.Date == dto.Date);
-
-            if (attendance == null) return null;
-
-            attendance.TeacherId = dto.TeacherId;
-            attendance.Status = dto.Status;
-            attendance.Remarks = dto.Remarks;
-
-            await _context.SaveChangesAsync();
-
-            return new ResponseAttendanceDTO
-            {
-                StudentId = attendance.StudentId,
-                CourseId = attendance.CourseId,
-                TeacherId = attendance.TeacherId,
-                Status = attendance.Status,
-                Remarks = attendance.Remarks,
-                Date = attendance.Date
-            };
+            if (a == null) return null;
+            a.TeacherId = dto.TeacherId;
+            a.Status = dto.Status;
+            a.Remarks = dto.Remarks;
+            a.UpdatedAt = DateTime.UtcNow;
+            await context.SaveChangesAsync();
+            return new ResponseAttendanceDTO(
+                a.StudentId, a.CourseCode, a.TeacherId,
+                a.Status, a.Remarks, a.Date);
         }
 
         public async Task<bool> Delete(string studentId, string courseId, DateTime date)
         {
-            var attendance = await _context.Attendances
+            var a = await context.Attendances
                 .FirstOrDefaultAsync(a => a.StudentId == studentId
-                                       && a.CourseId == courseId
+                                       && a.CourseCode == courseId
                                        && a.Date == date);
-
-            if (attendance == null) return false;
-
-            _context.Attendances.Remove(attendance);
-            await _context.SaveChangesAsync();
+            if (a == null) return false;
+            context.Attendances.Remove(a);
+            await context.SaveChangesAsync();
             return true;
         }
     }

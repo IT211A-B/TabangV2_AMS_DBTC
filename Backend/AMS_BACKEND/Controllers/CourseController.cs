@@ -4,65 +4,53 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AMS_BACKEND.Controllers
 {
-    /// <summary>Create, read, update, and delete course records.</summary>
-    [ApiController]
-    [Route("api/courses")]
-    [Produces("application/json")]
+    /// <summary>Handles course records.</summary>
+    [ApiController, Route("api/courses"), Produces("application/json")]
     public class CourseController(CourseService service) : ControllerBase
     {
-        /// <summary>Get all courses.</summary>
-        /// <response code="200">List of courses.</response>
+        /// <summary>Returns all courses.</summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<ResponseCourseDTO>), 200)]
         public async Task<IActionResult> GetAll() => Ok(await service.GetAll());
 
-        /// <summary>Get a single course by ID.</summary>
-        /// <response code="200">Course found.</response>
-        /// <response code="404">Course not found.</response>
-        [HttpGet("{id}")]
+        /// <summary>Returns a course by Code.</summary>
+        [HttpGet("{code}")]
         [ProducesResponseType(typeof(ResponseCourseDTO), 200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int code)
         {
-            var course = await service.GetById(id);
+            var course = await service.GetById(code);
             return course == null ? NotFound("Course not found.") : Ok(course);
         }
 
-        /// <summary>Add a new course.</summary>
-        /// <response code="201">Course created.</response>
-        /// <response code="400">Validation error.</response>
+        /// <summary>Creates a new course.</summary>
         [HttpPost]
         [ProducesResponseType(typeof(ResponseCourseDTO), 201)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Create([FromBody] CreateCourseDTO dto)
         {
             var created = await service.Create(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.CourseId }, created);
+            return CreatedAtAction(nameof(GetById), new { code = created.CourseCode }, created);
         }
 
-        /// <summary>Update an existing course.</summary>
-        /// <response code="200">Course updated.</response>
-        /// <response code="400">Validation error.</response>
-        /// <response code="404">Course not found.</response>
-        [HttpPut("{id}")]
+        /// <summary>Updates an existing course by Code.</summary>
+        [HttpPut("{code}")]
         [ProducesResponseType(typeof(ResponseCourseDTO), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateCourseDTO dto)
+        public async Task<IActionResult> Update(int code, [FromBody] UpdateCourseDTO dto)
         {
-            var updated = await service.Update(id, dto);
+            var updated = await service.Update(code, dto);
             return updated == null ? NotFound("Course not found.") : Ok(updated);
         }
 
-        /// <summary>Delete a course.</summary>
-        /// <response code="204">Deleted successfully.</response>
-        /// <response code="404">Course not found.</response>
-        [HttpDelete("{id}")]
+        /// <summary>Deletes a course by Code.</summary>
+        [HttpDelete("{code}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int code)
         {
-            var deleted = await service.Delete(id);
+            var deleted = await service.Delete(code);
             return deleted ? NoContent() : NotFound("Course not found.");
         }
     }

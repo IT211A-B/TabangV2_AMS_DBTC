@@ -3,8 +3,7 @@ using AMS_BACKEND.Interfaces;
 using AMS_BACKEND.Repositories;
 using AMS_BACKEND.Services;
 using Microsoft.EntityFrameworkCore;
-
-
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,23 +22,31 @@ builder.Services.AddScoped<AttendanceService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("https://localhost:7021") //Can be changed to the actual frontend URL tomorrow
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseCors("AllowFrontend");
+    app.UseCors();
+    app.UseAuthorization();
+    app.MapControllers();
+    app.Run();
 });
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseCors();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();

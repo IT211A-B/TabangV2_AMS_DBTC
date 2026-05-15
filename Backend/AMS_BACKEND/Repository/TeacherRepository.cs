@@ -6,83 +6,67 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AMS_BACKEND.Repositories
 {
-    public class TeacherRepository : ITeacherRepository
+    public class TeacherRepository(AppDBContext context) : ITeacherRepository
     {
-        private readonly AppDBContext _context;
-
-        public TeacherRepository(AppDBContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<List<ResponseTeacherDTO>> GetAll()
-        {
-            return await _context.Teachers
-                .Select(t => new ResponseTeacherDTO
-                {
-                    TeacherId = t.TeacherId,
-                    FullName = t.FullName,
-                    Email = t.Email
-                }).ToListAsync();
-        }
+        public async Task<List<ResponseTeacherDTO>> GetAll() =>
+            await context.Teachers
+                .Select(t => new ResponseTeacherDTO(
+                    t.TeacherId, 
+                    t.FullName, 
+                    t.Email,
+                    t.Sex, 
+                    t.Coursehandled, 
+                    t.Status))
+                .ToListAsync();
 
         public async Task<ResponseTeacherDTO?> GetById(int id)
         {
-            var teacher = await _context.Teachers.FindAsync(id);
-            if (teacher == null) return null;
-
-            return new ResponseTeacherDTO
-            {
-                TeacherId = teacher.TeacherId,
-                FullName = teacher.FullName,
-                Email = teacher.Email
-            };
+            var t = await context.Teachers.FindAsync(id);
+            return t == null ? null : new ResponseTeacherDTO(
+                t.TeacherId, 
+                t.FullName, 
+                t.Email,
+                t.Sex, 
+                t.Coursehandled, 
+                t.Status);
         }
 
         public async Task<ResponseTeacherDTO> Create(CreateTeacherDTO dto)
         {
-            var teacher = new Teacher
+            var t = new Teacher
             {
                 FullName = dto.FullName,
-                Email = dto.Email
+                Email = dto.Email,
+                Sex = dto.Sex,
+                Coursehandled = dto.Coursehandled,
+                Status = dto.Status
             };
-
-            _context.Teachers.Add(teacher);
-            await _context.SaveChangesAsync();
-
-            return new ResponseTeacherDTO
-            {
-                TeacherId = teacher.TeacherId,
-                FullName = teacher.FullName,
-                Email = teacher.Email
-            };
+            context.Teachers.Add(t);
+            await context.SaveChangesAsync();
+            return new ResponseTeacherDTO(
+                t.TeacherId, t.FullName, t.Email,
+                t.Sex, t.Coursehandled, t.Status);
         }
 
         public async Task<ResponseTeacherDTO?> Update(int id, UpdateTeacherDTO dto)
         {
-            var teacher = await _context.Teachers.FindAsync(id);
-            if (teacher == null) return null;
-
-            teacher.FullName = dto.FullName;
-            teacher.Email = dto.Email;
-
-            await _context.SaveChangesAsync();
-
-            return new ResponseTeacherDTO
-            {
-                TeacherId = teacher.TeacherId,
-                FullName = teacher.FullName,
-                Email = teacher.Email
-            };
+            var t = await context.Teachers.FindAsync(id);
+            if (t == null) return null;
+            t.FullName = dto.FullName; t.Email = dto.Email;
+            t.Sex = dto.Sex; t.Coursehandled = dto.Coursehandled;
+            t.Status = dto.Status;
+            await context.SaveChangesAsync();
+            return new ResponseTeacherDTO(
+                t.TeacherId, t.FullName, t.Email,
+                t.Sex, t.Coursehandled, t.Status);
         }
 
         public async Task<bool> Delete(int id)
         {
-            var teacher = await _context.Teachers.FindAsync(id);
-            if (teacher == null) return false;
-
-            _context.Teachers.Remove(teacher);
-            await _context.SaveChangesAsync();
+            var t = await context.Teachers.FindAsync(id);
+            if (t == null) return false;
+            context.Teachers.Remove(t);
+            await context.SaveChangesAsync();
             return true;
         }
     }
