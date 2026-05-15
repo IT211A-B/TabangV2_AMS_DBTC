@@ -11,7 +11,7 @@ namespace AMS_BACKEND.Repositories
         public async Task<List<ResponseCourseDTO>> GetAll() =>
             await context.Courses
                 .Select(c => new ResponseCourseDTO(
-                    c.CourseId, c.CourseName,
+                    c.CourseCode, c.CourseName,
                     c.Department, c.Units, c.TeacherId))
                 .ToListAsync();
 
@@ -19,7 +19,7 @@ namespace AMS_BACKEND.Repositories
         {
             var c = await context.Courses.FindAsync(id);
             return c == null ? null : new ResponseCourseDTO(
-                c.CourseId, c.CourseName,
+                c.CourseCode, c.CourseName,
                 c.Department, c.Units, c.TeacherId);
         }
 
@@ -35,7 +35,7 @@ namespace AMS_BACKEND.Repositories
             context.Courses.Add(c);
             await context.SaveChangesAsync();
             return new ResponseCourseDTO(
-                c.CourseId, c.CourseName,
+                c.CourseCode, c.CourseName,
                 c.Department, c.Units, c.TeacherId);
         }
 

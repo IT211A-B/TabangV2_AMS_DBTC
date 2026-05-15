@@ -2,7 +2,7 @@
 {
     public class Course
     {
-        public int CourseId { get; set; } // 210
+        public int CourseCode { get; set; } // 210
         public string CourseName { get; set; } = ""; // Information Technology
         public string Department { get; set; } = ""; // College of Computer Studies
         public string Units { get; set; } = ""; // 3
