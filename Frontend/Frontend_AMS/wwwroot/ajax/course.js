@@ -3,7 +3,7 @@
     //loadCourses();
     //filterTable('courseSearch', 'courseTableBody');
 
-    const BASE_URL = 'https://localhost:7018';
+    const BASE_URL = 'https://localhost:7018/api/Course';
 
     // GET ALL
     function getAll(success, error) {

@@ -4,7 +4,7 @@
     //filterTable('teacherSearch', 'teacherTableBody');
 
 
-    const BASE_URL = 'https://localhost:7018';
+    const BASE_URL = 'https://localhost:7018/api/Teacher';
     // GET ALL
     function getAll(success, error) {
 
