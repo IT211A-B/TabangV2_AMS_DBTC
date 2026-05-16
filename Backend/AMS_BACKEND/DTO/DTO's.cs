@@ -5,6 +5,9 @@ namespace AMS_BACKEND.DTO
     //STUDENT
     public class CreateStudentDTO
     {
+        [Required]
+        [Range(10000000000, 99999999999, ErrorMessage = "Student ID must be exactly 11 digits.")]
+        public long StudentId { get; set; }
         [Required][StringLength(100)] public string FullName { get; set; } = "";
         [Required][EmailAddress] public string Email { get; set; } = "";
         [Required][RegularExpression(@"^\d{2}$", ErrorMessage = "Age must be exactly 2 digits (e.g. 18).")]
@@ -35,9 +38,9 @@ namespace AMS_BACKEND.DTO
 
     public class ResponseStudentDTO
     {
-        public ResponseStudentDTO(int studentId, string fullName, string email, string age, string sex, string course, string yearLevel, string status)
+        public ResponseStudentDTO(long studentId, string fullName, string email, string age, string sex, string course, string yearLevel, string status)
         {
-            StudentId = studentId;
+            StudentId = (int)studentId;
             FullName = fullName;
             Email = email;
             Age = age;

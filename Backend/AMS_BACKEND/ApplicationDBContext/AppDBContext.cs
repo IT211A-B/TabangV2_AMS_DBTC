@@ -14,7 +14,14 @@ namespace AMS_BACKEND.ApplicationDBContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Attendance>()
-                .HasKey(a => new { a.StudentId, a.CourseCode, a.Date });
+        .HasKey(a => new { a.StudentId, a.CourseCode, a.Date });
+
+            modelBuilder.Entity<Course>()
+                .HasKey(c => c.CourseCode);
+            modelBuilder.Entity<Student>()
+                .HasKey(s => s.StudentId);
+            modelBuilder.Entity<Teacher>()
+                .HasKey(t => t.TeacherId);
         }
     }
 }

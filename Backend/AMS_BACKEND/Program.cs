@@ -14,7 +14,6 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IAttendanceRepository, AttendanceRepository>();
-
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<CourseService>();
@@ -32,21 +31,20 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
-        policy => policy.WithOrigins("https://localhost:7021") //Can be changed to the actual frontend URL tomorrow
+        policy => policy.WithOrigins("https://localhost:7021")
                         .AllowAnyMethod()
                         .AllowAnyHeader());
+}); 
 
-    var app = builder.Build();
+var app = builder.Build();
 
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-    app.UseCors("AllowFrontend");
-    app.UseCors();
-    app.UseAuthorization();
-    app.MapControllers();
-    app.Run();
-});
+app.UseCors("AllowFrontend"); 
+app.UseAuthorization();
+app.MapControllers();
+app.Run();

@@ -3,14 +3,15 @@ using AMS_BACKEND.Interfaces;
 
 namespace AMS_BACKEND.Services
 {
-    public class StudentService(IStudentRepository repo)
-    {
-        public Task<List<ResponseStudentDTO>> GetAll() => repo.GetAll();
-        public Task<ResponseStudentDTO?> GetById(int id) => repo.GetById(id);
-        public Task<ResponseStudentDTO> Create(CreateStudentDTO dto) => repo.Create(dto);
-        public Task<ResponseStudentDTO?> Update(int id, UpdateStudentDTO dto) => repo.Update(id, dto);
-        public Task<bool> Delete(int id) => repo.Delete(id);
-    }
+        public class StudentService(IStudentRepository repo)
+        {
+            public Task<List<ResponseStudentDTO>> GetAll() => repo.GetAll();
+            public Task<ResponseStudentDTO?> GetById(long id) => repo.GetById(id);
+            public Task<ResponseStudentDTO> Create(CreateStudentDTO dto) => repo.Create(dto);
+            public Task<ResponseStudentDTO?> Update(long id, UpdateStudentDTO dto) => repo.Update(id, dto);
+            public Task<bool> Delete(long id) => repo.Delete(id);
+        }
+}
 
     public class TeacherService(ITeacherRepository repo)
     {
@@ -42,4 +43,3 @@ namespace AMS_BACKEND.Services
             throw new NotImplementedException();
         }
     }
-}

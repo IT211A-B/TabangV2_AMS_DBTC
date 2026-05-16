@@ -16,7 +16,7 @@ namespace AMS_BACKEND.Repositories
                     s.YearLevel, s.Status))
                 .ToListAsync();
 
-        public async Task<ResponseStudentDTO?> GetById(int id)
+        public async Task<ResponseStudentDTO?> GetById(long id)
         {
             var s = await context.Students.FindAsync(id);
             return s == null ? null : new ResponseStudentDTO(
@@ -29,6 +29,7 @@ namespace AMS_BACKEND.Repositories
         {
             var s = new Student
             {
+                StudentId = dto.StudentId, 
                 FullName = dto.FullName,
                 Email = dto.Email,
                 Age = dto.Age,
@@ -45,7 +46,7 @@ namespace AMS_BACKEND.Repositories
                 s.YearLevel, s.Status);
         }
 
-        public async Task<ResponseStudentDTO?> Update(int id, UpdateStudentDTO dto)
+        public async Task<ResponseStudentDTO?> Update(long id, UpdateStudentDTO dto) 
         {
             var s = await context.Students.FindAsync(id);
             if (s == null) return null;
@@ -60,7 +61,7 @@ namespace AMS_BACKEND.Repositories
                 s.YearLevel, s.Status);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id) 
         {
             var s = await context.Students.FindAsync(id);
             if (s == null) return false;

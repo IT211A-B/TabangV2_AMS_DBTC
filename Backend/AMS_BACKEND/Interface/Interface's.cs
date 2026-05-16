@@ -5,12 +5,11 @@ namespace AMS_BACKEND.Interfaces
     public interface IStudentRepository
     {
         Task<List<ResponseStudentDTO>> GetAll();
-        Task<ResponseStudentDTO?> GetById(int id);
+        Task<ResponseStudentDTO?> GetById(long id);
         Task<ResponseStudentDTO> Create(CreateStudentDTO dto);
-        Task<ResponseStudentDTO?> Update(int id, UpdateStudentDTO dto);
-        Task<bool> Delete(int id);
+        Task<ResponseStudentDTO?> Update(long id, UpdateStudentDTO dto);
+        Task<bool> Delete(long id);
     }
-
     public interface ITeacherRepository
     {
         Task<List<ResponseTeacherDTO>> GetAll();

@@ -1,8 +1,12 @@
-﻿namespace AMS_BACKEND.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace AMS_BACKEND.Models
 {
     public class Student
     {
-        public int StudentId { get; set; } // 1001
+        [DatabaseGenerated(DatabaseGeneratedOption.None)] // manual input
+        public long StudentId { get; set; }  // 11988623231
         public string FullName { get; set; } = ""; // John Doe
         public string Email { get; set; } = ""; 
         public string Age { get; set; } = ""; // 18

@@ -17,7 +17,7 @@ namespace AMS_BACKEND.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ResponseStudentDTO), 200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(long id)
         {
             var student = await service.GetById(id);
             return student == null ? NotFound("Student not found.") : Ok(student);
@@ -38,7 +38,7 @@ namespace AMS_BACKEND.Controllers
         [ProducesResponseType(typeof(ResponseStudentDTO), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateStudentDTO dto)
+        public async Task<IActionResult> Update(long id, [FromBody] UpdateStudentDTO dto)
         {
             var updated = await service.Update(id, dto);
             return updated == null ? NotFound("Student not found.") : Ok(updated);
@@ -48,7 +48,7 @@ namespace AMS_BACKEND.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
             var deleted = await service.Delete(id);
             return deleted ? NoContent() : NotFound("Student not found.");
