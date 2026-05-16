@@ -9,6 +9,7 @@
     --green: #2d8a5e;
     --green-tint: #e8f5ee;
     --red: #c0392b;
+    --black: #000000;
     --red-tint: #fdf0ee;
     --orange: #c97c1a;
     --orange-tint: #fef5e7;
@@ -84,7 +85,7 @@ body {
     border-radius: 7px;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.55);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     text-decoration: none;
     transition: background 0.15s, color 0.15s;
@@ -123,7 +124,7 @@ body {
 
 .page-title {
     font-family: 'Nunito', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--text);
 }
@@ -135,7 +136,7 @@ body {
 }
 
 .topbar-date {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text3);
 }
 
@@ -147,7 +148,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--blue);
 }
@@ -172,7 +173,7 @@ body {
 
 .card-title {
     font-family: 'Nunito', sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--text);
 }
@@ -228,7 +229,7 @@ body {
 .table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 14px;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -242,9 +243,9 @@ body {
     .table th {
         text-align: left;
         padding: 9px 12px;
-        color: var(--text3);
+        color: var( --black);
         font-weight: 700;
-        font-size: 11px;
+        font-size: 13px;
         text-transform: uppercase;
         letter-spacing: 0.04em;
         border-bottom: 1px solid var(--border);
@@ -516,7 +517,7 @@ body {
 }
 
 .dash-card {
-    background: var(--white);
+    background: var(--black);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 16px 20px;
