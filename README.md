@@ -1,6 +1,6 @@
 # TabangV2_AMS_DBTC
 
-Project Overview
+**Project Overview**
 
 Tabang group was tasked into making a web-based Attendance Management System (AMS) designed to simplify and improve attendance monitoring for both students and faculty. The system allows teachers to efficiently manage student attendance, schedules, and records, while administrators can oversee faculty attendance and monitor overall academic performance.
 
