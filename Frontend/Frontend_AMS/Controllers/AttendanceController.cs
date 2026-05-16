@@ -1,55 +1,73 @@
 ﻿using Frontend_AMS.Models;
 using Frontend_AMS.Services;
 using Microsoft.AspNetCore.Mvc;
+
 namespace Frontend_AMS.Controllers
 {
     public class AttendanceController : Controller
     {
+        private readonly AttendanceService _attendanceService;
+
+        public AttendanceController(AttendanceService attendanceService)
+        {
+            _attendanceService = attendanceService;
+        }
+
+        //renders Index
         public IActionResult Index()
         {
-                ViewData["Title"] = "Attendance";
-                ViewData["ActivePage"] = "Attendance";
-
+            ViewData["Title"] = "Attendance";
+            ViewData["ActivePage"] = "Attendance";
             return View();
         }
-        //GET ALL ATTENDANCE RECORDS
+
+        // GetAll
         [HttpGet]
         public IActionResult GetAll()
         {
-            // Implement logic to retrieve all attendance records
-            return Json(new { success = true, data = new List<object>() });
+            var records = _attendanceService.GetAll();
+            return Json(records);
         }
 
-        //GET ATTENDANCE RECORD BY ID
+        // GetById
         [HttpGet]
         public IActionResult Get(int id)
         {
-            // Implement logic to retrieve an attendance record by ID
-            return Json(new { success = true, data = new { Id = id } });
+            var record = _attendanceService.Get(id);
+            if (record == null)
+                return NotFound(new { success = false });
+
+            return Json(record);
         }
 
-        //CREATE ATTENDANCE RECORD
+        // Create
         [HttpPost]
         public IActionResult Create([FromBody] AttendanceModel attendance)
         {
-            var created = true;// Implement logic to create a new attendance record ako ra ni ge tab maam 
-            return View();
+            var created = _attendanceService.Create(attendance);
+            return Ok(new { success = true, data = created }); 
         }
 
-        //EDIT ATTENDANCE RECORD
+        //Edit
         [HttpPut]
         public IActionResult Edit([FromBody] AttendanceModel attendance)
         {
-            var edited = true;// Implement logic to create a new attendance record ako ra ni ge tab maam 
-            return View();
+            var updated = _attendanceService.Edit(attendance);
+            if (updated == null)
+                return NotFound(new { success = false });
+
+            return Ok(new { success = true, data = updated }); 
         }
 
-        //DELETE ATTENDANCE RECORD
+        // Delete
         [HttpDelete]
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            var deleted = true;// Implement logic to create a new attendance record ako ra ni ge tab maam
-            return View();
+            var deleted = _attendanceService.Delete(id);
+            if (!deleted)
+                return NotFound(new { success = false });
+
+            return Ok(new { success = true }); 
         }
     }
 }

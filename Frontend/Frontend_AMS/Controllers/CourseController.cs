@@ -6,11 +6,13 @@ namespace Frontend_AMS.Controllers
 {
     public class CourseController : Controller
     {
-        private readonly Services.CourseService _courseService;
-        public CourseController(Services.CourseService courseService)
+        private readonly CourseService _courseService;
+
+        public CourseController(CourseService courseService)
         {
             _courseService = courseService;
         }
+        //renders Index
         public IActionResult Index()
         {
             ViewData["Title"] = "Courses";
@@ -18,7 +20,7 @@ namespace Frontend_AMS.Controllers
             return View();
         }
 
-        //GET ALL COURSES
+        //GetAll
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -26,30 +28,28 @@ namespace Frontend_AMS.Controllers
             return Json(courses);
         }
 
-
-        //GET COURSE BY ID
+        // GETbyID
         [HttpGet]
         public IActionResult Get(string courseCode)
         {
             var course = _courseService.Get(courseCode);
             if (course == null)
-            {
-                return NotFound();
-            }
+                return NotFound(new { success = false });
+
             return Json(course);
         }
 
-        //CREATE COURSE
+        // Create
         [HttpPost]
         public IActionResult Create([FromBody] CourseModel course)
         {
             var created = _courseService.Create(course);
-            return View();
+            return Ok(new { success = true, data = created }); 
         }
 
-        //EDIT COURSE
+        // Edit
         [HttpPut]
-         public IActionResult Edit([FromBody] CourseModel course)
+        public IActionResult Edit([FromBody] CourseModel course)
         {
             var updated = _courseService.Edit(course);
             if (updated == null)
@@ -58,7 +58,7 @@ namespace Frontend_AMS.Controllers
             return Ok(new { success = true, data = updated });
         }
 
-        //DELETE COURSE
+        // Delete
         [HttpDelete]
         public IActionResult Delete(string courseCode)
         {

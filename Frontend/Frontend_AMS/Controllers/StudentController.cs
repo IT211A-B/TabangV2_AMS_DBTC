@@ -1,4 +1,5 @@
-﻿using Frontend_AMS.Models;
+﻿// Controllers/StudentController.cs
+using Frontend_AMS.Models;
 using Frontend_AMS.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,20 +8,19 @@ namespace Frontend_AMS.Controllers
     public class StudentController : Controller
     {
         private readonly StudentService _studentService;
+
         public StudentController(StudentService studentService)
         {
             _studentService = studentService;
         }
-
         public IActionResult Index()
         {
             ViewData["Title"] = "Students";
             ViewData["ActivePage"] = "Students";
-
             return View();
         }
 
-        //GET ALL STUDENTS
+        //GetAll
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -28,28 +28,28 @@ namespace Frontend_AMS.Controllers
             return Json(students);
         }
 
-        //GET STUDENT BY ID
+        // GETbyID
         [HttpGet]
         public IActionResult Get(int id)
         {
             var student = _studentService.Get(id);
             if (student == null)
-            {
-                return NotFound();
-            }
+                return NotFound(new { success = false });
+
             return Json(student);
         }
-        //CREATE STUDENT
+
+        // Create
         [HttpPost]
-        public IActionResult Create([FromBody]StudentModel student)
+        public IActionResult Create([FromBody] StudentModel student)
         {
             var created = _studentService.Create(student);
-            return View();
+            return Ok(new { success = true, data = created });  
         }
 
+        // Edit
         [HttpPut]
-        //EDIT STUDENT
-        public IActionResult Edit([FromBody]StudentModel student)
+        public IActionResult Edit([FromBody] StudentModel student)
         {
             var updated = _studentService.Edit(student);
             if (updated == null)
@@ -58,7 +58,7 @@ namespace Frontend_AMS.Controllers
             return Ok(new { success = true, data = updated });
         }
 
-        //DELETE STUDENT
+        // Delete
         [HttpDelete]
         public IActionResult Delete(int id)
         {
