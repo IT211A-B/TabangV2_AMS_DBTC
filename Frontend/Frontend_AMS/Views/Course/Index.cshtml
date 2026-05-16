@@ -37,7 +37,7 @@
         </tr>
     </thead>
     <tbody id="courseTableBody">
-		<!--populated by jQuery -->
+    <td colspan="7" class="text-center text-muted">Loading courses...</td>
     </tbody>
 </table>
 
@@ -54,10 +54,10 @@
             </div>
 
             <div class="modal-body">
-                <input id="createCode" class="form-control mb-2" placeholder="Course Code (e.g. BSIT)" />
-                <input id="createName" class="form-control mb-2" placeholder="Course Name" />
+                <input id="createCode" class="form-control mb-2" placeholder="Course Code (e.g. IT21)" />
+                <input id="createName" class="form-control mb-2" placeholder="Course Name (e.g. Introduction to IT)" />
                 <input id="createTeacher" class="form-control mb-2" placeholder="Assigned Teacher" />
-                <input id="createUnits" class="form-control mb-2" placeholder="Units" type="number" min="1" max="9" />
+                <input id="createUnits" class="form-control mb-2" placeholder="Units" type="number" min="1" max="4" />
                 <p id="createError" class="text-danger small mt-1" style="display:none;"></p>
             </div>
 
@@ -83,10 +83,10 @@
 
             <div class="modal-body">
                 <input type="hidden" id="editId" />
-                <input id="editCode" class="form-control mb-2" placeholder="Course Code" />
-                <input id="editName" class="form-control mb-2" placeholder="Course Name" />
+                <input id="editCode" class="form-control mb-2" placeholder="Course Code (e.g. IT21)" />
+                <input id="editName" class="form-control mb-2" placeholder="Course Name (e.g. Introduction to IT)" />
                 <input id="editTeacher" class="form-control mb-2" placeholder="Assigned Teacher" />
-                <input id="editUnits" class="form-control mb-2" placeholder="Units" type="number" min="1" max="9" />
+                <input id="editUnits" class="form-control mb-2" placeholder="Units" type="number" min="1" max="4" />
                 <p id="editError" class="text-danger small mt-1" style="display:none;"></p>
             </div>
 

@@ -1,6 +1,9 @@
 ﻿window.AttendanceApi = (function () {
 
-    const BASE_URL = 'http://localhost:5294/api/Attendance';
+    //loadAttendance();
+    //filterTable('attendanceSearch', 'attendanceTableBody');
+
+    const BASE_URL = 'https://localhost:7018';
 
     // GET ALL
     function getAll(success, error) {

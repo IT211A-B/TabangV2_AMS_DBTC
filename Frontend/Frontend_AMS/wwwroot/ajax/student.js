@@ -1,6 +1,9 @@
 ﻿window.StudentApi = (function () {
 
-    const BASE_URL = 'http://localhost:5294/api/Student';
+    //loadStudents();
+    //filterTable('studentSearch', 'studentTableBody');
+
+    const BASE_URL = 'https://localhost:7018';
 
     // GET ALL
     function getAll(success, error) {

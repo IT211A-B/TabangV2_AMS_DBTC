@@ -1,6 +1,9 @@
 ﻿window.CourseApi = (function () {
 
-    const BASE_URL = 'http://localhost:5294/api/Course';
+    //loadCourses();
+    //filterTable('courseSearch', 'courseTableBody');
+
+    const BASE_URL = 'https://localhost:7018';
 
     // GET ALL
     function getAll(success, error) {

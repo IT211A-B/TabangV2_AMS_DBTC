@@ -1,7 +1,10 @@
 ﻿window.TeacherApi = (function () {
 
-    const BASE_URL = 'http://localhost:5294/api/Teacher';
+    //loadTeachers();
+    //filterTable('teacherSearch', 'teacherTableBody');
 
+
+    const BASE_URL = 'https://localhost:7018';
     // GET ALL
     function getAll(success, error) {
 
