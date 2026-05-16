@@ -92,13 +92,13 @@
     // CREATE MODAL
     $('#createModal').on('show.bs.modal', function () {
 
-        $('#createCode').val('');
+        $('#createCode').val('') || '';
 
-        $('#createName').val('');
+        $('#createName').val('') || '';
 
-        $('#createTeacher').val('');
+        $('#createTeacher').val('') || '';
 
-        $('#createUnits').val('');
+        $('#createUnits').val('') || '';
 
         $('#createError').text('').hide();
     });

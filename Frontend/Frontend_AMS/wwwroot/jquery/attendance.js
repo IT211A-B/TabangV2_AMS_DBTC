@@ -110,15 +110,15 @@
 
         const payload = {
 
-            fullName: $('#createStudent').val(),
+            fullName: $('#createStudent').val() || '',
 
-            course: $('#createCourse').val(),
+            course: $('#createCourse').val() || '',
 
-            date: $('#createDate').val(),
+            date: $('#createDate').val() || '',
 
-            status: $('#createStatus').val(),
+            status: $('#createStatus').val() || 'Present',
 
-            remarks: $('#createRemarks').val()
+            remarks: $('#createRemarks').val() || ''
         };
 
         AttendanceApi.create(
@@ -141,28 +141,22 @@
 
     // EDIT BUTTON
     $(document).on('click', '.btn-edit', function () {
-
         const id = $(this).data('id');
 
         AttendanceApi.getById(
-
             id,
-
             function (a) {
-
                 $('#editId').val(a.studentsId);
-
                 $('#editStudent').val(a.fullName);
-
                 $('#editCourse').val(a.course);
-
                 $('#editDate').val(formatDate(a.date));
-
                 $('#editStatus').val(a.status);
-
                 $('#editRemarks').val(a.remarks);
-
                 $('#editModal').modal('show');
+            },
+            function (xhr) {
+                console.error('Error:', xhr.responseText);
+                alert('Failed to load attendance.');
             }
         );
     });

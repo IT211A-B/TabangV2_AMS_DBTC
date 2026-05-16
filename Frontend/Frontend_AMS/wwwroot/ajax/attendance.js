@@ -3,7 +3,7 @@
     //loadAttendance();
     //filterTable('attendanceSearch', 'attendanceTableBody');
 
-    const BASE_URL = 'https://localhost:7018/api/Attendance';
+    const BASE_URL = 'https://localhost:7018/api/attendance';
 
     // GET ALL
     function getAll(success, error) {

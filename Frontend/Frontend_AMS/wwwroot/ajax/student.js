@@ -3,7 +3,7 @@
     //loadStudents();
     //filterTable('studentSearch', 'studentTableBody');
 
-    const BASE_URL = 'https://localhost:7018/api/Student';
+    const BASE_URL = 'https://localhost:7018/api/students';
 
     // GET ALL
     function getAll(success, error) {

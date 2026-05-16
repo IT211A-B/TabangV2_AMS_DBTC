@@ -119,15 +119,15 @@
     // CREATE MODAL
     $('#createModal').on('show.bs.modal', function () {
 
-        $('#createName').val('');
+        $('#createName').val('') || 'dominic';
 
-        $('#createEmail').val('');
+        $('#createEmail').val('') || 'domsocarol@gmail.com';
 
-        $('#createCourse').val('');
+        $('#createCourse').val('') || 'cs12';
+        
+        $('#createYear').val('') || '2nd year';
 
-        $('#createYear').val('');
-
-        $('#createStatus').val('');
+        $('#createStatus').val('') || 'Present';
 
         $('#createError').text('').hide();
     });
